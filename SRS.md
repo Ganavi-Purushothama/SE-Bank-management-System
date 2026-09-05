@@ -135,7 +135,7 @@ The Bank Management System is a web-based application. It utilizes a core backen
 
 ### 3.3 Software Interfaces
 
-- **Database API:** PostgreSQL C/C++ interface (e.g., `libpq` or similar wrapper) for executing SQL queries and managing data persistence.
+- **Database API:** `libpq` (PostgreSQL's native C client library) for executing SQL queries and managing data persistence.
 - **Web Framework/Server:** A C/C++ web deployment framework or custom server engine for handling HTTP routing and client requests.
 
 ### 3.4 Communications Interfaces
@@ -265,11 +265,17 @@ Description: Ensure account and transaction data is securely stored.
 
 ### 7.1 UML Use-Case Diagram
 
-*(To be added — at least 1 use-case diagram showing actors: Customer and Admin interacting through the Web UI, with backend C/C++ and PostgreSQL DB processing the requests.)*
+The use-case diagram is maintained as `BMS_UseCase_Diagram.drawio` in the repository root. It shows the **Customer** and **Bank Admin** actors interacting with the system through the Web UI, covering authentication, account management, deposit/withdrawal, balance inquiry, and admin-only functions.
 
-### 7.2 Notes
+> Export the `.drawio` file to PNG/SVG (draw.io does not render inline on GitHub) and embed it here, e.g.:
+> `![Use Case Diagram](./docs/diagrams/BMS_UseCase_Diagram.png)`
 
-Diagrams (use-case, ER diagrams for PostgreSQL, and optionally a sequence diagram of the client-server transaction process) should be inserted here as image files once created, and linked/embedded in this Markdown file.
+### 7.2 Additional Diagrams
+
+The following diagrams are still needed and should be added as image files, linked/embedded in this section once created:
+
+- **ER Diagram** — PostgreSQL schema (accounts, transactions, admin/session tables)
+- **Sequence Diagram** — client-server flow for a transaction (e.g., deposit request → auth check → DB write → response)
 
 ---
 
@@ -278,12 +284,35 @@ Diagrams (use-case, ER diagrams for PostgreSQL, and optionally a sequence diagra
 | Req ID | Requirement (short) | Section Ref | Module | Test Case(s) | Status (N/P/A) | Comments |
 |---|---|---|---|---|---|---|
 | BMS-F-001 | Create account | 4.1 | AccountModule | TC-Acc-01 | N | |
+| BMS-F-002 | Unique account number | 4.1 | AccountModule | TC-Acc-02 | N | |
+| BMS-F-003 | Minimum initial deposit | 4.1 | AccountModule | TC-Acc-03 | N | |
+| BMS-F-004 | Admin view account details | 4.1 | AccountModule | TC-Acc-04 | N | |
+| BMS-F-005 | Admin close/delete account | 4.1 | AccountModule | TC-Acc-05 | N | |
+| BMS-F-006 | Update customer details | 4.1 | AccountModule | TC-Acc-06 | N | |
 | BMS-F-007 | Authenticate user | 4.2 | AuthModule | TC-Auth-01 | N | |
+| BMS-F-008 | Mask PIN entry | 4.2 | AuthModule | TC-Auth-02 | N | |
+| BMS-F-009 | Lock after 3 failed attempts | 4.2 | AuthModule | TC-Auth-03 | N | |
 | BMS-F-010 | Deposit funds | 4.3 | TransactionModule | TC-Dep-01 | N | |
+| BMS-F-011 | Reject invalid deposit amounts | 4.3 | TransactionModule | TC-Dep-02 | N | |
+| BMS-F-012 | Log deposit transaction | 4.3 | TransactionModule | TC-Dep-03 | N | |
 | BMS-F-013 | Withdraw funds | 4.4 | TransactionModule | TC-Wd-01, TC-Wd-02 | N | |
+| BMS-F-014 | Reject withdrawal below minimum balance | 4.4 | TransactionModule | TC-Wd-02 | N | |
+| BMS-F-015 | Log withdrawal transaction | 4.4 | TransactionModule | TC-Wd-03 | N | |
 | BMS-F-016 | Balance inquiry | 4.5 | AccountModule | TC-Bal-01 | N | |
-| BMS-F-019 | Persist data to DB | 4.7 | DatabaseModule| TC-Persist-01 | N | |
-| BMS-NF-001 | Web Response time target | 5 | All | TC-Perf-01 | N | |
+| BMS-F-017 | Persistent transaction log | 4.6 | DatabaseModule | TC-Hist-01 | N | |
+| BMS-F-018 | Mini-statement (last N transactions) | 4.6 | TransactionModule | TC-Hist-02 | N | |
+| BMS-F-019 | Persist data to DB | 4.7 | DatabaseModule | TC-Persist-01 | N | |
+| BMS-F-020 | Retrieve real-time account data | 4.7 | DatabaseModule | TC-Persist-02 | N | |
+| BMS-NF-001 | Web response time target | 5 | All | TC-Perf-01 | N | |
+| BMS-NF-002 | Transaction integrity | 5 | DatabaseModule | TC-Rel-01 | N | |
+| BMS-NF-003 | Input validation / injection defense | 5 | All | TC-Rob-01 | N | |
+| BMS-NF-004 | Usability of deposit flow | 5 | All | TC-UX-01 | N | |
+| BMS-NF-005 | Modular codebase | 5 | All | TC-Maint-01 | N | |
+| BMS-NF-006 | Scalability (500 sessions) | 5 | All | TC-Scale-01 | N | |
+| BMS-SR-001 | Auth required for account ops | 5.1.2 | AuthModule | TC-Sec-01 | N | |
 | BMS-SR-002 | Hash PINs in DB | 5.1.2 | AuthModule | TC-Sec-02 | N | |
+| BMS-SR-003 | Lockout requiring admin reset | 5.1.2 | AuthModule | TC-Sec-03 | N | |
+| BMS-SR-004 | RBAC for admin routes | 5.1.2 | AuthModule | TC-Sec-04 | N | |
+| BMS-SR-005 | Security event logging | 5.1.2 | AuthModule | TC-Sec-05 | N | |
 
 *(N = Not tested, P = Pass, A = Actioned/Fail — update as testing progresses.)*
