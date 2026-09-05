@@ -135,7 +135,7 @@ The Bank Management System is a web-based application. It utilizes a core backen
 
 ### 3.3 Software Interfaces
 
-- **Database API:** PostgreSQL C/C++ interface (e.g., `libpq` or similar wrapper) for executing SQL queries and managing data persistence.
+- **Database API:** `libpq` (PostgreSQL's native C client library) for executing SQL queries and managing data persistence.
 - **Web Framework/Server:** A C/C++ web deployment framework or custom server engine for handling HTTP routing and client requests.
 
 ### 3.4 Communications Interfaces
