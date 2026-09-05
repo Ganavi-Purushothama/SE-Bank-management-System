@@ -20,7 +20,7 @@
 | Version | Date | Author | Change Summary | Approval |
 |---|---|---|---|---|
 | 1.0 | 03-09-2026 | Team 6 | Initial SRS draft | Pending |
-| 2.0 | 05-09-2026 | Team 6 | Transitioned to web-based architecture, integrated PostgreSQL, and added networking interfaces. | Pending |
+| 1.1 | 05-09-2026 | Team 6 | Transitioned to web-based architecture, integrated PostgreSQL, and added networking interfaces. | Pending |
 
 ## Table of Contents
 
