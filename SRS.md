@@ -2,7 +2,7 @@
 
 **Project:** Bank Management System
 **Team:** Team 6
-**Version:** 2.0
+**Version:** 1.1
 **Date:** 03-09-2026
 **Status:** Draft
 
@@ -11,15 +11,15 @@
 | USN | Name |
 |---|---|
 | PES2UG24CS167 | Ganavi Purushothama |
-| PES2UG24CS152 | DEVOPAM PAL |
-| PES2UG24CS154 | DEEPTHI V |
+| PES2UG24CS152 | Devopam Pal |
+| PES2UG24CS150 | Deepthi V |
 | PES2UG24CS161 | Divyanshi Verma |
 
 ## Revision History
 
 | Version | Date | Author | Change Summary | Approval |
 |---|---|---|---|---|
-| 1.0 | 03-09-2026 | Team 6 | Initial SRS draft | Pending |
+| 1.0 | 03-09-2026 | Team 6 | Initial SRS draft | Completed |
 | 1.1 | 05-09-2026 | Team 6 | Transitioned to web-based architecture, integrated PostgreSQL, and added networking interfaces. | Pending |
 
 ## Table of Contents
@@ -190,8 +190,8 @@ Description: Allow a customer to withdraw funds from their own account, subject 
 
 | Req ID | Requirement (shall...) | Type | Priority | Source | Acceptance Criteria / Test Ref | Comments/Dependencies |
 |---|---|---|---|---|---|---|
-| BMS-F-013 | The system shall allow a customer to withdraw an amount not exceeding their current balance. | Functional | High | Business | AC-013: Withdrawal succeeds only if amount ≤ balance. Test: TC-Wd-01 | — |
-| BMS-F-014 | The system shall reject withdrawal requests that would result in a negative balance below the minimum balance requirement. | Functional | High | Business | AC-014: Withdrawal rejected with clear message when insufficient funds. Test: TC-Wd-02 | — |
+| BMS-F-013 | The system shall allow a customer to withdraw an amount not exceeding their current balance. | Functional | High | Business | AC-013: Withdrawal succeeds only if amount ≤ balance. Test: TC-Wd-01 | This step has to be taken with utmost cate and with proper authorization |
+| BMS-F-014 | The system shall reject withdrawal requests that would result in a negative balance below the minimum balance requirement. | Functional | High | Business | AC-014: Withdrawal rejected with clear message when insufficient funds. Test: TC-Wd-02 | This step has to be taken with utmost cate and with proper authorization |
 | BMS-F-015 | The system shall record every withdrawal as a transaction entry with timestamp and amount. | Functional | Medium | Audit | AC-015: Transaction log contains new entry after withdrawal. Test: TC-Wd-03 | Depends on 4.6 |
 
 ### 4.5 Balance Inquiry
@@ -261,29 +261,23 @@ Description: Ensure account and transaction data is securely stored.
 
 ---
 
-## 7. System Models and Diagrams
+## 7. Requirements Traceability Matrix (RTM)
 
-### 7.1 UML Use-Case Diagram
+| Req ID     | Requirement (short)      | Section Ref | Module            | Test Case(s)       | Status (N/P/A) |
+| ---------- | ------------------------ | ----------- | ----------------- | ------------------ | -------------- |
+| BMS-F-001  | Create account           | 4.1         | AccountModule     | TC-Acc-01          | N              |
+| BMS-F-007  | Authenticate user        | 4.2         | AuthModule        | TC-Auth-01         | N              |
+| BMS-F-010  | Deposit funds            | 4.3         | TransactionModule | TC-Dep-01          | N              |
+| BMS-F-013  | Withdraw funds           | 4.4         | TransactionModule | TC-Wd-01, TC-Wd-02 | N              |
+| BMS-F-016  | Balance inquiry          | 4.5         | AccountModule     | TC-Bal-01          | N              |
+| BMS-F-019  | Persist data to DB       | 4.7         | DatabaseModule    | TC-Persist-01      | N              |
+| BMS-NF-001 | Web Response time target | 5           | All               | TC-Perf-01         | N              |
+| BMS-SR-002 | Hash PINs in DB          | 5.1.2       | AuthModule        | TC-Sec-02          | N              |
 
-*(To be added — at least 1 use-case diagram showing actors: Customer and Admin interacting through the Web UI, with backend C/C++ and PostgreSQL DB processing the requests.)*
 
-### 7.2 Notes
 
-Diagrams (use-case, ER diagrams for PostgreSQL, and optionally a sequence diagram of the client-server transaction process) should be inserted here as image files once created, and linked/embedded in this Markdown file.
 
----
 
-## 8. Requirements Traceability Matrix (RTM)
 
-| Req ID | Requirement (short) | Section Ref | Module | Test Case(s) | Status (N/P/A) | Comments |
-|---|---|---|---|---|---|---|
-| BMS-F-001 | Create account | 4.1 | AccountModule | TC-Acc-01 | N | |
-| BMS-F-007 | Authenticate user | 4.2 | AuthModule | TC-Auth-01 | N | |
-| BMS-F-010 | Deposit funds | 4.3 | TransactionModule | TC-Dep-01 | N | |
-| BMS-F-013 | Withdraw funds | 4.4 | TransactionModule | TC-Wd-01, TC-Wd-02 | N | |
-| BMS-F-016 | Balance inquiry | 4.5 | AccountModule | TC-Bal-01 | N | |
-| BMS-F-019 | Persist data to DB | 4.7 | DatabaseModule| TC-Persist-01 | N | |
-| BMS-NF-001 | Web Response time target | 5 | All | TC-Perf-01 | N | |
-| BMS-SR-002 | Hash PINs in DB | 5.1.2 | AuthModule | TC-Sec-02 | N | |
 
-*(N = Not tested, P = Pass, A = Actioned/Fail — update as testing progresses.)*
+(P = Pass, A = Actioned/Fail — update as testing progresses.)*
