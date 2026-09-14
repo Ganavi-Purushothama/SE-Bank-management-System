@@ -96,23 +96,7 @@ This document provides the architectural deliverables for the project: a compone
 
 See `BMS_Component_Diagram.drawio`. Summary of components:
 
-```
-[ Browser (HTML/CSS/JS) ]
-          |  HTTP(S)
-          v
-[ Node.js + Express Server ]
-   - Routing
-   - Session/Auth Middleware
-   - DB Access Layer
-          |  spawns child process, passes structured input/output
-          v
-[ C/C++ Core Engine (compiled executable) ]
-   - Deposit/Withdrawal rule validation
-   - Balance computation
-          ^
-          |  reads/writes
-[ SQL Database (accounts, transactions, sessions) ]
-```
+![BMS Component Diagram](BMS_Component_Diagram_UML.png)
 
 ## 3.4 Component Descriptions
 
