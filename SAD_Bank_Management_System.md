@@ -19,7 +19,7 @@
 | Course Coordinator | | |
 | Team Lead | Ganavi Purushothama | |
 | Team Meamber | Devopam Pal | |
-| Team Meamber| Deepthi | |
+| Team Meamber| Deepthi V| |
 | Team Meamber| Divyanshi Verma | |
 
 
