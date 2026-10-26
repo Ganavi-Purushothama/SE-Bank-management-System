@@ -1,0 +1,38 @@
+{
+  "name": "team6-bank-management",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "local": "node scripts/local.mjs",
+    "build": "node scripts/build.mjs",
+    "start": "node --env-file-if-exists=.env server/index.js",
+    "migrate": "node --env-file-if-exists=.env scripts/migrate.mjs",
+    "admin": "node --env-file-if-exists=.env scripts/admin.mjs",
+    "test": "npm run build && node --test --test-concurrency=1 tests/core.test.js tests/api.test.js",
+    "test:postgres": "npm run build && node scripts/test-postgres.mjs",
+    "test:e2e": "playwright test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check server public scripts tests package.json playwright.config.js eslint.config.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "helmet": "^8.1.0",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.3.14",
+    "@eslint/js": "^9.39.0",
+    "@playwright/test": "^1.56.0",
+    "embedded-postgres": "^18.4.0-beta.17",
+    "eslint": "^9.39.0",
+    "globals": "^16.5.0",
+    "prettier": "^3.6.2"
+  }
+}
