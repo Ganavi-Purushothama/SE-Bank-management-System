@@ -119,7 +119,11 @@ export async function createApp(db, config, engine) {
   app.get("/api/accounts/:id/transactions", async (req, res) => {
     await bank.accessible(db, req.params.id, req.user);
     const currentPage = page(req.query.page),
-      values = [req.params.id];
+      values = [req.params.id],
+      bounds = {};
+    // Issue #9: oldest-first ordering is available for statements; newest-first stays the default.
+    const order = req.query.order ?? "desc";
+    assert(["asc", "desc"].includes(order), 400, "Invalid sort order");
     let where = "account_id=$1";
     if (req.query.type) {
       assert(
@@ -151,6 +155,7 @@ export async function createApp(db, config, engine) {
             ? new Date(Date.parse(value) + 86400000).toISOString()
             : value,
         );
+        bounds[key] = values[values.length - 1];
         where += ` AND created_at${comparison}$${values.length}::timestamptz`;
       }
     }
@@ -160,18 +165,37 @@ export async function createApp(db, config, engine) {
         400,
         "Start date must precede end date",
       );
-    const total = Number(
-      (
-        await db.query(
-          `SELECT count(*) AS count FROM transactions WHERE ${where}`,
-          values,
-        )
-      ).rows[0].count,
-    );
+    const totals = (
+      await db.query(
+        `SELECT count(*) AS count,
+          COALESCE(SUM(amount) FILTER (WHERE type IN ('DEPOSIT','OPENING')),0) AS credits,
+          COALESCE(SUM(amount) FILTER (WHERE type IN ('WITHDRAW','SETTLEMENT')),0) AS debits
+         FROM transactions WHERE ${where}`,
+        values,
+      )
+    ).rows[0];
+    const total = Number(totals.count);
+    // Statement balances ignore the type filter: they describe the account over the selected dates.
+    const balanceBefore = async (limit) =>
+      Number(
+        (
+          await db.query(
+            "SELECT balance_after FROM transactions WHERE account_id=$1 AND created_at < COALESCE($2::timestamptz,'infinity') ORDER BY created_at DESC,id DESC LIMIT 1",
+            [req.params.id, limit ?? null],
+          )
+        ).rows[0]?.balance_after ?? 0,
+      );
+    const summary = {
+      count: total,
+      totalCredits: Number(totals.credits),
+      totalDebits: Number(totals.debits),
+      openingBalance: bounds.from ? await balanceBefore(bounds.from) : 0,
+      closingBalance: await balanceBefore(bounds.to),
+    };
     values.push(20, (currentPage - 1) * 20);
     const rows = (
       await db.query(
-        `SELECT id,type,amount,balance_after,created_at FROM transactions WHERE ${where} ORDER BY created_at DESC,id DESC LIMIT $${values.length - 1} OFFSET $${values.length}`,
+        `SELECT id,type,amount,balance_after,created_at FROM transactions WHERE ${where} ORDER BY created_at ${order},id ${order} LIMIT $${values.length - 1} OFFSET $${values.length}`,
         values,
       )
     ).rows;
@@ -187,6 +211,8 @@ export async function createApp(db, config, engine) {
         page: currentPage,
         total,
         pageSize: 20,
+        order,
+        summary,
       },
     });
   });

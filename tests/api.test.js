@@ -391,6 +391,70 @@ test("complete account lifecycle, security boundaries and financial consistency"
     },
   );
   await t.test(
+    "issue #9: statement summary, date range, ordering and customer isolation",
+    async () => {
+      const all = (
+        await customer.request(`/accounts/${account.id}/transactions`)
+      ).body.data;
+      const newest = all.items.map((item) => item.created_at);
+      assert.deepEqual(
+        newest,
+        [...newest].sort((a, b) => new Date(b) - new Date(a)),
+      );
+      const ascending = (
+        await customer.request(`/accounts/${account.id}/transactions?order=asc`)
+      ).body.data;
+      assert.deepEqual(
+        ascending.items.map((item) => item.id),
+        [...all.items].reverse().map((item) => item.id),
+      );
+      assert.equal(
+        (
+          await customer.request(
+            `/accounts/${account.id}/transactions?order=sideways`,
+          )
+        ).status,
+        400,
+      );
+      const credits = all.items
+          .filter((i) => ["DEPOSIT", "OPENING"].includes(i.type))
+          .reduce((sum, i) => sum + i.amount, 0),
+        debits = all.items
+          .filter((i) => ["WITHDRAW", "SETTLEMENT"].includes(i.type))
+          .reduce((sum, i) => sum + i.amount, 0);
+      assert.deepEqual(all.summary, {
+        count: all.total,
+        totalCredits: credits,
+        totalDebits: debits,
+        openingBalance: 0,
+        closingBalance: credits - debits,
+      });
+      assert.equal(
+        all.summary.closingBalance,
+        (await customer.request(`/accounts/${account.id}`)).body.data.balance,
+      );
+      const today = new Date().toISOString().slice(0, 10);
+      const future = (
+        await customer.request(
+          `/accounts/${account.id}/transactions?from=2999-01-01`,
+        )
+      ).body.data;
+      assert.equal(future.total, 0);
+      assert.deepEqual(future.items, []);
+      assert.equal(future.summary.openingBalance, credits - debits);
+      const todays = (
+        await customer.request(
+          `/accounts/${account.id}/transactions?from=${today}&to=${today}`,
+        )
+      ).body.data;
+      assert.equal(todays.total, all.total);
+      assert.equal(
+        (await other.request(`/accounts/${account.id}/transactions`)).status,
+        404,
+      );
+    },
+  );
+  await t.test(
     "three failures persist lockout, invalidate sessions and require admin unlock",
     async () => {
       const attacker = f.client();

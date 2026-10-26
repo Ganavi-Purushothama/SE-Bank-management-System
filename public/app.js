@@ -138,6 +138,10 @@ function historyTable(items) {
     return '<p class="empty">No transactions match this view.</p>';
   return `<div class="table-wrap"><table><thead><tr><th>Transaction</th><th>Date & time</th><th>Status</th><th>Amount</th><th>Balance after</th></tr></thead><tbody>${items.map((item) => `<tr><td>${escape(item.type)}<br><small>${escape(item.id.slice(0, 8))}</small></td><td>${escape(date(item.created_at))}</td><td><span class="pill">Committed</span></td><td class="${["DEPOSIT", "OPENING"].includes(item.type) ? "positive" : "negative"}">${["DEPOSIT", "OPENING"].includes(item.type) ? "+" : "−"} ${money(item.amount)}</td><td>${money(item.balance_after)}</td></tr>`).join("")}</tbody></table></div>`;
 }
+function statementSummary(summary) {
+  if (!summary) return "";
+  return `<div class="grid" aria-label="Statement summary"><p class="subtle">Opening balance<br><strong>${money(summary.openingBalance)}</strong></p><p class="subtle">Total credits<br><strong class="positive">+ ${money(summary.totalCredits)}</strong></p><p class="subtle">Total debits<br><strong class="negative">− ${money(summary.totalDebits)}</strong></p><p class="subtle">Closing balance<br><strong>${money(summary.closingBalance)}</strong></p><p class="subtle">Transactions<br><strong>${summary.count}</strong></p></div>`;
+}
 function pagination(data) {
   return `<div class="pagination"><button id="previous" ${data.page <= 1 ? "disabled" : ""}>← Previous</button><small>Page ${data.page} · ${data.total} records</small><button id="next" ${data.page * data.pageSize >= data.total ? "disabled" : ""}>Next →</button></div>`;
 }
@@ -184,7 +188,7 @@ async function customer(main) {
         "Transaction history",
         "Your committed account activity, all in one place.",
       ) +
-      `<section class="card"><form id="filters" class="filters"><label>Transaction type<select name="type"><option value="">All transactions</option>${["DEPOSIT", "WITHDRAW", "OPENING", "SETTLEMENT"].map((type) => `<option ${state.filter.type === type ? "selected" : ""}>${type}</option>`).join("")}</select></label>${field("from", "From date", "date", `value="${escape(state.filter.from || "")}"`)}${field("to", "To date", "date", `value="${escape(state.filter.to || "")}"`)}<button class="primary">Apply filters</button></form><p class="subtle">Date filters use UTC. Displayed times use your browser's timezone.</p>${historyTable(history.items)}${pagination(history)}</section>`;
+      `<section class="card"><form id="filters" class="filters"><label>Transaction type<select name="type"><option value="">All transactions</option>${["DEPOSIT", "WITHDRAW", "OPENING", "SETTLEMENT"].map((type) => `<option ${state.filter.type === type ? "selected" : ""}>${type}</option>`).join("")}</select></label>${field("from", "From date", "date", `value="${escape(state.filter.from || "")}"`)}${field("to", "To date", "date", `value="${escape(state.filter.to || "")}"`)}<button class="primary">Apply filters</button></form><p class="subtle">Date filters use UTC. Displayed times use your browser's timezone.</p>${statementSummary(history.summary)}${historyTable(history.items)}${pagination(history)}</section>`;
     document.querySelector("#filters").onsubmit = (event) => {
       event.preventDefault();
       state.filter = Object.fromEntries(
