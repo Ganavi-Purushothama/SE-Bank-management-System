@@ -27,6 +27,11 @@ export function database(connectionString) {
         client.release();
       }
     },
+    async ping() {
+      const start = Date.now();
+      await pool.query("SELECT 1");
+      return { connected: true, latencyMs: Date.now() - start };
+    },
     close: () => pool.end(),
   };
 }

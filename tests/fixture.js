@@ -52,6 +52,11 @@ export async function testDatabase() {
           fn({ query: (sql, params) => tx.query(sql, params) }),
         ),
       ),
+    async ping() {
+      const start = Date.now();
+      await serialized(() => pg.query("SELECT 1"));
+      return { connected: true, latencyMs: Date.now() - start };
+    },
     close: () => pg.close(),
   };
   return db;
