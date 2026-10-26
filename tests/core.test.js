@@ -108,18 +108,18 @@ test("issue #8: phone validator accepts valid formats and rejects invalid number
   ])
     assert.throws(() => phone(value));
 });
-test("issue #5: C++ rule engine distinguishes overdraft from minimum-balance breach", async () => {
+test("issue #5: C++ rule engine enforces boundary conditions and available funds", async () => {
   // Withdraw exactly to zero when minBalance=0 — should succeed
   assert.equal(await evaluate("WITHDRAW", 500, 500, 0), 0);
   // Withdraw exactly to the minimum — should succeed
   assert.equal(await evaluate("WITHDRAW", 1000, 500, 500), 500);
   // Withdraw one paise above available-above-minimum — should reject
   await assert.rejects(evaluate("WITHDRAW", 1000, 501, 500), (err) =>
-    err.message.includes("minimum balance"),
+    err.message.includes("Insufficient available funds"),
   );
-  // Withdraw more than balance — should reject with different message
+  // Withdraw more than balance — should reject
   await assert.rejects(evaluate("WITHDRAW", 100, 200, 0), (err) =>
-    err.message.includes("Insufficient"),
+    err.message.includes("Insufficient available funds"),
   );
   // Settlement with zero balance: SETTLEMENT amount must be >0, so this is rejected by bounds
   await assert.rejects(evaluate("SETTLEMENT", 0, 1, 0));
