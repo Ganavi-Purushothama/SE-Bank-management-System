@@ -1,6 +1,6 @@
 import { randomUUID, randomInt } from "node:crypto";
 import { assert } from "./errors.js";
-import { amount, text, password, uuid, fields } from "./validation.js";
+import { amount, text, phone, password, uuid, fields } from "./validation.js";
 import { hashPassword } from "./crypto.js";
 import { evaluate } from "./core.js";
 export const accountColumns =
@@ -52,22 +52,34 @@ export function banking(db, config, engine = evaluate) {
     async create(body, actor) {
       fields(body, ["name", "phone", "address", "password", "initialDeposit"]);
       const name = text(body.name, "Name", 100),
-        phone = text(body.phone ?? "", "Phone", 30, false),
+        phoneNumber = phone(body.phone),
         address = text(body.address ?? "", "Address", 300, false);
       const initial = amount(body.initialDeposit),
         hash = await hashPassword(password(body.password));
       const balance = await engine("OPENING", 0, initial, config.minInitial);
       return db.transaction(async (c) => {
         const id = randomUUID(),
-          userId = randomUUID(),
-          number = `6${randomInt(100000000, 999999999)}${randomInt(100, 999)}`;
+          userId = randomUUID();
+        // Issue #8: account numbers must be unique; draw until unused (UNIQUE constraint remains the final guard).
+        let number;
+        for (let attempt = 0; attempt < 5; attempt++) {
+          const candidate = `6${randomInt(100000000, 999999999)}${randomInt(100, 999)}`;
+          const taken = await c.query("SELECT 1 FROM users WHERE login=$1", [
+            candidate,
+          ]);
+          if (!taken.rows.length) {
+            number = candidate;
+            break;
+          }
+        }
+        assert(number, 503, "Could not allocate an account number; retry");
         await c.query(
           "INSERT INTO users(id,login,password_hash,role) VALUES($1,$2,$3,'CUSTOMER')",
           [userId, number, hash],
         );
         await c.query(
           "INSERT INTO accounts(id,number,user_id,name,phone,address,balance) VALUES($1,$2,$3,$4,$5,$6,$7)",
-          [id, number, userId, name, phone, address, balance],
+          [id, number, userId, name, phoneNumber, address, balance],
         );
         await c.query(
           "INSERT INTO transactions(id,account_id,type,amount,balance_after,request_key) VALUES($1,$2,'OPENING',$3,$3,$4)",
@@ -134,14 +146,15 @@ export function banking(db, config, engine = evaluate) {
     async update(id, user, body) {
       fields(body, ["name", "phone", "address"]);
       const name = text(body.name, "Name", 100),
-        phone = text(body.phone, "Phone", 30, false),
         address = text(body.address, "Address", 300, false);
+      assert(typeof body.phone === "string", 400, "Phone must be text");
+      const phoneNumber = phone(body.phone);
       return db.transaction(async (c) => {
         const row = await accessible(c, id, user, true);
         assert(row.status === "ACTIVE", 409, "Account is closed");
         await c.query(
           "UPDATE accounts SET name=$1,phone=$2,address=$3 WHERE id=$4",
-          [name, phone, address, id],
+          [name, phoneNumber, address, id],
         );
         await audit(c, "DETAILS_UPDATED", user.id, id);
         return present(

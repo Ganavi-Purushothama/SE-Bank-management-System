@@ -359,6 +359,38 @@ test("complete account lifecycle, security boundaries and financial consistency"
     );
   });
   await t.test(
+    "issue #8: phone validation rejects malformed numbers and keeps stored details",
+    async () => {
+      const before = (await customer.request(`/accounts/${account.id}`)).body
+        .data;
+      for (const phone of ["abc", "12", "98765-43210; DROP TABLE users"])
+        assert.equal(
+          (
+            await customer.request(`/accounts/${account.id}`, "PATCH", {
+              name: before.name,
+              phone,
+              address: before.address,
+            })
+          ).status,
+          400,
+        );
+      const after = (await customer.request(`/accounts/${account.id}`)).body
+        .data;
+      assert.equal(after.phone, before.phone);
+      const formatted = await customer.request(
+        `/accounts/${account.id}`,
+        "PATCH",
+        {
+          name: before.name,
+          phone: "+91 98765-43210",
+          address: before.address,
+        },
+      );
+      assert.equal(formatted.status, 200);
+      assert.equal(formatted.body.data.phone, "+91 98765-43210");
+    },
+  );
+  await t.test(
     "three failures persist lockout, invalidate sessions and require admin unlock",
     async () => {
       const attacker = f.client();
@@ -480,6 +512,7 @@ test("complete account lifecycle, security boundaries and financial consistency"
       );
       assert.ok(events.includes("ACCOUNT_CLOSED_SETTLED"));
       assert.ok(events.includes("LOGIN_LOCKED"));
+      assert.ok(events.includes("LOGOUT"));
     },
   );
 });
