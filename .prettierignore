@@ -1,0 +1,9 @@
+node_modules
+build
+test-results
+playwright-report
+*.md
+*.drawio
+*.sql
+core
+package-lock.json
