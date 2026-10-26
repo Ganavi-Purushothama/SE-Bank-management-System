@@ -14,7 +14,8 @@ inline std::int64_t evaluate(const std::string& op, std::int64_t balance,
     return balance + amount;
   }
   if (op == "WITHDRAW" || op == "SETTLEMENT") {
-    if (amount > balance || balance - amount < minimum) throw std::runtime_error("Insufficient available funds");
+    if (amount > balance) throw std::runtime_error("Insufficient funds");
+    if (balance - amount < minimum) throw std::runtime_error("Withdrawal would breach minimum balance");
     return balance - amount;
   }
   throw std::runtime_error("Invalid operation");
