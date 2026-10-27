@@ -1,0 +1,12 @@
+# Keep executable/configuration source formatting reproducible across Windows and CI.
+*.js text eol=lf
+*.mjs text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.cpp text eol=lf
+*.hpp text eol=lf
+*.sql text eol=lf
+*.webm binary
