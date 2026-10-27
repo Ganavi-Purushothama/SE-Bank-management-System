@@ -224,7 +224,7 @@ test(
       await customer.request(`/accounts/${account.id}/withdraw`, "POST", {
         amount: "-999999", // Invalid/induced failure amount
       });
-    } catch (err) {
+    } catch {
       // Expected failure handled
     }
 
