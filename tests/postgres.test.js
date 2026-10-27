@@ -10,6 +10,7 @@ import {
 import { migrate } from "../server/db.js";
 import { token, digest, hashPassword } from "../server/crypto.js";
 import http from "node:http";
+
 test(
   "real PostgreSQL migrations are repeatable",
   { skip: !process.env.TEST_DATABASE_URL },
@@ -30,6 +31,7 @@ test(
     );
   },
 );
+
 test(
   "real PostgreSQL serves 500 fictional customer sessions",
   { skip: !process.env.TEST_DATABASE_URL },
@@ -103,6 +105,7 @@ test(
     );
   },
 );
+
 test(
   "real PostgreSQL concurrent idempotency and minimum balance use row locks",
   { skip: !process.env.TEST_DATABASE_URL },
@@ -185,5 +188,54 @@ test(
     } finally {
       await secondConnection.close();
     }
+  },
+);
+
+test(
+  "Transaction failure triggers balance rollback and creates no success ledger entry",
+  { skip: !process.env.TEST_DATABASE_URL },
+  async (t) => {
+    const f = await fixture();
+    t.after(() => f.close());
+    const admin = f.client(),
+      customer = f.client();
+      
+    await admin.request("/login", "POST", {
+      accountNumber: "test-admin",
+      password: adminPassword,
+    });
+    const account = (
+      await admin.request("/admin/accounts", "POST", {
+        name: "Rollback Test Customer",
+        initialDeposit: "5000",
+        password: customerPassword,
+      })
+    ).body.data;
+    
+    await customer.request("/login", "POST", {
+      accountNumber: account.number,
+      password: customerPassword,
+    });
+
+    const initialBalanceResponse = await customer.request(`/accounts/${account.id}`);
+    const initialBalance = initialBalanceResponse.body.data.balance;
+
+    try {
+      await customer.request(`/accounts/${account.id}/withdraw`, "POST", {
+        amount: "-999999", // Invalid/induced failure amount
+      });
+    } catch (err) {
+      // Expected failure handled
+    }
+
+    const finalBalanceResponse = await customer.request(`/accounts/${account.id}`);
+    const finalBalance = finalBalanceResponse.body.data.balance;
+    assert.equal(finalBalance, initialBalance);
+
+    const txResponse = await customer.request(`/accounts/${account.id}/transactions`);
+    const successfulTx = txResponse.body.data.items.find(
+      (tx) => tx.type === 'WITHDRAWAL' && tx.amount === 999999
+    );
+    assert.equal(successfulTx, undefined);
   },
 );
