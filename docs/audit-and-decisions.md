@@ -2,6 +2,9 @@
 
 Audit date: 26 October 2026. Source: GitHub default branch `main`, commit `cb1212a`, cloned into `Jackfruit/SE-Bank-management-System`. The parent `Jackfruit` directory was not a Git repository; its Word/PDF/template files were left untouched. The implementation is on `implementation/bank-system`.
 
+> **Architecture Co-Owner:** Divyanshi Verma (SRN: 161, GitHub: `@divyanshi-verma-25`)  
+> **Responsibilities:** System Architecture Specification (SAD), component traceability, request flow, and frontend/database boundary validation.
+
 ## What existed
 
 The repository contained README, SRS, SAD, STP, an SRS PDF and UML component/use-case diagrams. There was no application code, database/schema, dependencies, environment configuration, test runner, deployment, or existing banking data. All application features were missing. No embedded credentials were found in the inspected text artifacts. Design artifacts do not establish implementation or security.
