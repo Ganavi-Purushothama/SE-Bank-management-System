@@ -35,4 +35,5 @@ CREATE TABLE audit_events (
  id uuid PRIMARY KEY, actor_id uuid REFERENCES users(id), account_id uuid REFERENCES accounts(id),
  event varchar(60) NOT NULL, created_at timestamptz NOT NULL DEFAULT now()
 );
+CREATE INDEX audit_account_idx ON audit_events(account_id, created_at DESC);
 INSERT INTO schema_migrations(version) VALUES (1);

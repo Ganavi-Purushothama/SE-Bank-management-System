@@ -55,7 +55,7 @@ Browser tests exercise the complete deposit/withdraw/history/admin workflow agai
 
 ## Running the normal application
 
-Use the `implementation/bank-system` branch for the application while its pull request is under review. GitHub's main branch receives the implementation only after the team merges it.
+The application is available on `main` following the merge of PR #13. The Sprint 1 evaluation kit links the actual GitHub evidence and current preparation gaps separately.
 
 1. Install Node/G++/PostgreSQL and run `npm ci`, then `npm run build`.
 2. Create a dedicated PostgreSQL role/database as described in README.

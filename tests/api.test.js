@@ -391,6 +391,24 @@ test("complete account lifecycle, security boundaries and financial consistency"
     },
   );
   await t.test(
+    "issue #4: database connectivity health check and constraint error handling",
+    async () => {
+      const health = await admin.request("/health");
+      assert.equal(health.status, 200);
+      assert.equal(health.body.status, "OK");
+      assert.equal(health.body.database?.connected, true);
+      assert.equal(typeof health.body.database?.latencyMs, "number");
+
+      await assert.rejects(
+        f.db.query(
+          "INSERT INTO accounts(id,number,user_id,name,balance) VALUES($1,$2,$3,$4,$5)",
+          [randomUUID(), "699999999999", randomUUID(), "Invalid Account", -500],
+        ),
+        (err) => err.code === "23514",
+      );
+    },
+  );
+  await t.test(
     "three failures persist lockout, invalidate sessions and require admin unlock",
     async () => {
       const attacker = f.client();

@@ -40,9 +40,16 @@ SAD/STP additionally reference SQL injection prevention and HTTPS as SR-006/007;
 
 Tests use real compiled C++ for opening, deposit, withdrawal and settlement. PGlite fixtures serialize transactions because that engine has one connection. Only the dedicated PostgreSQL suite establishes multiconnection row-locking behavior. Browser tests use PGlite, not a mocked banking API; only the explicit API-failure UI test intercepts a request.
 
+## Sprint 1 issue mapping (#4 and #5)
+
+| Issue | Delivered by | Verification |
+|---|---|---|
+| #4 Database and backend foundation | `server/db.js` (pool, transaction wrapper, statement timeout query helper, ping, migration runner), `migrations/001_initial.sql` (schema, relationships, check constraints, audit index), `server/config.js` (env vars), `server/app.js` (health, database error mapping) | database health check, check constraint enforcement, and rollback tests in `tests/api.test.js` and `tests/postgres.test.js` |
+| #5 Core banking transactions | `server/banking.js` (deposit, withdraw, settlement, audit trail), `core/banking.hpp` & `core/main.cpp` (C++ integer arithmetic, bounds and available-funds enforcement, stderr diagnostics) | C++ unit boundary tests and financial operation tests in `tests/core.test.js` and `tests/api.test.js` |
+
 ## Sprint 1 issue mapping (#7, #8)
 
 | Issue | Delivered by | Verification |
 |---|---|---|
 | #7 Authentication & security | `server/auth.js` (login, scrypt verification, persisted sessions, lockout, guards, logout + `LOGOUT` audit event) | login, lockout, expiry/logout and RBAC subtests in `tests/api.test.js` |
-| #8 Account management | `server/banking.js` (`create` with unused-number allocation, `update`, `close`), `server/validation.js` (`phone`) | account creation, phone validation, update/ownership and closure subtests |
+| #8 Account management | `server/banking.js` (`create` with unused-number allocation, `update`, `close`), `server/validation.js` (`phone`) | account creation, phone validation, update/ownership and closure subtests | 

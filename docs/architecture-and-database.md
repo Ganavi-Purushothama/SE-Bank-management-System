@@ -22,7 +22,7 @@ flowchart LR
 | audit_events | UUID, event name, optional actor/account foreign keys, timestamp |
 | schema_migrations | applied version and timestamp |
 
-Indexes support account number and user lookups, lowercase names, recent account transactions, session-user invalidation and expiry. Substring searches with ILIKE may scan the small account table; no unsupported claim of indexed arbitrary substring lookup. Users and customers are represented by a one-to-one user/account relation rather than a redundant customer table. Administrators have a user without a bank account. No hard-delete route exists; foreign keys and retained ledger preserve history.
+Indexes support account number and user lookups, lowercase names, recent account transactions, per-account audit events, session-user invalidation and expiry. Substring searches with ILIKE may scan the small account table; no unsupported claim of indexed arbitrary substring lookup. Users and customers are represented by a one-to-one user/account relation rather than a redundant customer table. Administrators have a user without a bank account. No hard-delete route exists; foreign keys and retained ledger preserve history.
 
 ## Transaction boundaries
 

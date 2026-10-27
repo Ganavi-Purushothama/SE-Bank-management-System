@@ -9,6 +9,7 @@ import {
   uuid,
   fields,
   page,
+  phone,
 } from "../server/validation.js";
 import { hashPassword, verifyPassword } from "../server/crypto.js";
 import { configuration } from "../server/config.js";
@@ -92,4 +93,36 @@ test("password hashing uses per-password salts and verifies credentials", async 
   assert.ok(!a.includes("fiction"));
   assert.equal(await verifyPassword("A fiction password 2026", a), true);
   assert.equal(await verifyPassword("incorrect", a), false);
+});
+test("issue #8: phone validator accepts valid formats and rejects invalid numbers", () => {
+  assert.equal(phone("+91 98765-43210"), "+91 98765-43210");
+  assert.equal(phone("9876543210"), "9876543210");
+  assert.equal(phone("(080) 1234-5678"), "(080) 1234-5678");
+  assert.equal(phone(""), "");
+  for (const value of [
+    "abc",
+    "12",
+    "1234",
+    "98765-43210; DROP TABLE users",
+    "++9198765",
+  ])
+    assert.throws(() => phone(value));
+});
+test("issue #5: C++ rule engine enforces boundary conditions and available funds", async () => {
+  // Withdraw exactly to zero when minBalance=0 — should succeed
+  assert.equal(await evaluate("WITHDRAW", 500, 500, 0), 0);
+  // Withdraw exactly to the minimum — should succeed
+  assert.equal(await evaluate("WITHDRAW", 1000, 500, 500), 500);
+  // Withdraw one paise above available-above-minimum — should reject
+  await assert.rejects(evaluate("WITHDRAW", 1000, 501, 500), (err) =>
+    err.message.includes("Insufficient available funds"),
+  );
+  // Withdraw more than balance — should reject
+  await assert.rejects(evaluate("WITHDRAW", 100, 200, 0), (err) =>
+    err.message.includes("Insufficient available funds"),
+  );
+  // Settlement with zero balance: SETTLEMENT amount must be >0, so this is rejected by bounds
+  await assert.rejects(evaluate("SETTLEMENT", 0, 1, 0));
+  // Full settlement of nonzero balance must leave exactly 0
+  assert.equal(await evaluate("SETTLEMENT", 75000, 75000, 0), 0);
 });

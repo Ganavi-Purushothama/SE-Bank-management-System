@@ -140,6 +140,15 @@ export function banking(db, config, engine = evaluate) {
           "INSERT INTO transactions(id,account_id,type,amount,balance_after,request_key) VALUES($1,$2,$3,$4,$5,$6)",
           [transactionId, id, operation, minor, balance, key],
         );
+        // Issue #5: record every committed financial operation in the audit log
+        await audit(
+          c,
+          operation === "DEPOSIT"
+            ? "DEPOSIT_COMMITTED"
+            : "WITHDRAWAL_COMMITTED",
+          user.id,
+          id,
+        );
         return { transactionId, newBalance: balance, replayed: false };
       });
     },
