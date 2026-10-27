@@ -2,6 +2,7 @@
 
 Audit date: 26 October 2026. Source: GitHub default branch `main`, commit `cb1212a`, cloned into `Jackfruit/SE-Bank-management-System`. The parent `Jackfruit` directory was not a Git repository; its Word/PDF/template files were left untouched. The implementation is on `implementation/bank-system`.
 
+
 > **Architecture Co-Owner:** Divyanshi Verma (SRN: 161, GitHub: `@divyanshi-verma-25`)  
 > **Responsibilities:** System Architecture Specification (SAD), component traceability, request flow, and frontend/database boundary validation.
 
