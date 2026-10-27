@@ -16,8 +16,10 @@ int main() {
     auto result = bank::evaluate(fields[1], std::stoll(fields[2]), std::stoll(fields[3]), std::stoll(fields[4]));
     std::cout << "{\"status\":\"APPROVED\",\"newBalance\":" << result << "}\n";
   } catch (const std::out_of_range&) {
+    std::cerr << "{\"event\":\"core_rejection\",\"reason\":\"Integer out of range\"}" << std::endl;
     std::cout << "{\"status\":\"REJECTED\",\"reason\":\"Integer out of range\"}\n";
   } catch (const std::exception& error) {
+    std::cerr << "{\"event\":\"core_rejection\",\"reason\":\"" << error.what() << "\"}" << std::endl;
     std::cout << "{\"status\":\"REJECTED\",\"reason\":\"" << error.what() << "\"}\n";
   }
 }

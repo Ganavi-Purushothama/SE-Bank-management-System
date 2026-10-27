@@ -47,8 +47,16 @@ export async function createApp(db, config, engine) {
   app.use(express.json({ limit: "8kb", strict: true }));
   app.use(cookieParser());
   app.get("/api/health", async (req, res) => {
-    await db.query("SELECT 1");
-    res.json({ status: "OK" });
+    try {
+      const dbHealth = db.ping
+        ? await db.ping()
+        : { connected: true, latencyMs: 0 };
+      res.json({ status: "OK", database: dbHealth });
+    } catch {
+      res
+        .status(503)
+        .json({ status: "UNAVAILABLE", reason: "Database connection failed" });
+    }
   });
   app.get("/api/config", (req, res) =>
     res.json({
@@ -294,7 +302,13 @@ export async function createApp(db, config, engine) {
     }),
   );
   app.use((error, req, res, _next) => {
-    const status = error.status || (error.code === "23505" ? 409 : 500);
+    let status = error.status;
+    if (!status) {
+      if (error.code === "23505") status = 409;
+      else if (error.code === "23514") status = 400;
+      else if (error.code === "23503") status = 400;
+      else status = 500;
+    }
     if (status >= 500)
       console.error(
         JSON.stringify({
@@ -310,7 +324,11 @@ export async function createApp(db, config, engine) {
           ? "Invalid JSON request"
           : error.code === "23505"
             ? "A unique identifier already exists; retry the request"
-            : error.message;
+            : error.code === "23514"
+              ? "Database check constraint violation; data violates integrity rules"
+              : error.code === "23503"
+                ? "Referenced record does not exist in database"
+                : error.message;
     res
       .status(status)
       .json({ status: "REJECTED", reason, requestId: req.requestId });

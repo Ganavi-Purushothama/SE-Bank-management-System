@@ -29,18 +29,7 @@ export function text(value, label, max, required = true) {
   );
   return result;
 }
-// Issue #8: optional phone number; digits with an optional leading +, spaces, hyphens and brackets.
-export function phone(value) {
-  const result = text(value ?? "", "Phone", 30, false);
-  const digits = result.replace(/\D/g, "").length;
-  assert(
-    result === "" ||
-      (/^\+?[0-9 ()-]+$/.test(result) && digits >= 7 && digits <= 15),
-    400,
-    "Phone must contain 7–15 digits and only digits, spaces, hyphens, brackets or a leading +",
-  );
-  return result;
-}
+
 export function password(value) {
   assert(
     typeof value === "string" &&
@@ -79,4 +68,16 @@ export function page(value = "1") {
     "Invalid page",
   );
   return Number(value);
+}
+// Issue #8: optional phone number; digits with an optional leading +, spaces, hyphens and brackets.
+export function phone(value) {
+  const result = text(value ?? "", "Phone", 30, false);
+  const digits = result.replace(/\D/g, "").length;
+  assert(
+    result === "" ||
+      (/^\+?[0-9 ()-]+$/.test(result) && digits >= 7 && digits <= 15),
+    400,
+    "Phone must contain 7–15 digits and only digits, spaces, hyphens, brackets or a leading +",
+  );
+  return result;
 }
