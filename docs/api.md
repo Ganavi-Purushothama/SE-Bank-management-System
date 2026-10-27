@@ -6,7 +6,7 @@ All POST/PATCH calls require `Content-Type: application/json` and an `Origin` ex
 
 | Method / path | Access | Input | Successful result |
 |---|---|---|---|
-| GET `/api/health` | Public | none | `200 {status:"OK"}` after database query |
+| GET `/api/health` | Public | none | `200 {status:"OK",database:{connected:true,latencyMs}}` after database ping; `503` if database is down |
 | GET `/api/config` | Public | none | `200 data: {minInitial,minBalance,currency}` |
 | POST `/api/login` | Public, rate-limited | `{accountNumber,password}`; accountNumber may be admin login | `200 data: {role,csrfToken}` and new session cookie |
 | GET `/api/me` | Signed in | none | `200 data: {role,csrfToken,accounts:[]}`; admin has no personal account |
@@ -26,7 +26,7 @@ Account data: `id,number,name,phone,address,type,balance,status,created_at,close
 
 ## Validation and errors
 
-`400`: malformed body/JSON, unexpected fields, invalid identifiers, amounts, page/date/type, missing idempotency key, confirmation mismatch. `401`: invalid login, locked/closed login (same generic error), missing/expired/revoked session. `403`: disallowed origin, missing/incorrect CSRF token, incorrect role. `404`: nonexistent or non-owned account, unknown endpoint. `409`: closed state or reused idempotency key with a different amount/operation; unique identifier conflict. `413`: body above 8 KB. `415`: wrong content type. `422`: C++ rejects initial minimum, insufficient funds, retained minimum, or maximum balance. `429`: more than 30 login requests per IP in 15 minutes. `500`: database/internal error (generic message). `503`: missing, timed out, or malformed-response C++ engine. A database commit error never produces an APPROVED response.
+`400`: malformed body/JSON, unexpected fields, invalid identifiers, amounts, page/date/type, missing idempotency key, confirmation mismatch, database check constraint (`23514`) or foreign key (`23503`) violation. `401`: invalid login, locked/closed login (same generic error), missing/expired/revoked session. `403`: disallowed origin, missing/incorrect CSRF token, incorrect role. `404`: nonexistent or non-owned account, unknown endpoint. `409`: closed state or reused idempotency key with a different amount/operation; unique identifier conflict (`23505`). `413`: body above 8 KB. `415`: wrong content type. `422`: C++ rejects initial minimum, insufficient funds, retained minimum, or maximum balance. `429`: more than 30 login requests per IP in 15 minutes. `500`: database/internal error (generic message). `503`: missing, timed out, or malformed-response C++ engine, or database connectivity failure on health check. A database commit error never produces an APPROVED response.
 
 Names: trimmed, nonempty, maximum 100 characters. Phone: up to 30; address: up to 300. No control characters. Password: minimum 12 characters, maximum 128 UTF-8 bytes. Admin login: 1–32 alphanumeric/hyphen characters. Customer account numbers are generated server-side and constrained unique. Amount strings: positive, no sign/exponent/leading zeroes except `0.xx`, maximum two decimals and 9,000,000,000,000 paise. UUID and page parameters are validated. Transaction filters use inclusive `from` and `to` YYYY-MM-DD **UTC** dates, newest first, 20 per page. `type` is one of the four ledger types. Search treats `%` and `_` as literal characters and uses parameterized queries.
 

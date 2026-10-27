@@ -11,8 +11,20 @@ export function database(connectionString) {
   pool.on("error", () =>
     console.error(JSON.stringify({ event: "database_connection_error" })),
   );
+  pool.on("remove", () =>
+    console.error(JSON.stringify({ event: "database_pool_client_removed" })),
+  );
   return {
     query: (sql, values) => pool.query(sql, values),
+    async queryWithTimeout(sql, values, timeoutMs = 5000) {
+      const client = await pool.connect();
+      try {
+        await client.query(`SET LOCAL statement_timeout = ${timeoutMs}`);
+        return await client.query(sql, values);
+      } finally {
+        client.release();
+      }
+    },
     async transaction(fn) {
       const client = await pool.connect();
       try {
@@ -26,6 +38,11 @@ export function database(connectionString) {
       } finally {
         client.release();
       }
+    },
+    async ping() {
+      const start = Date.now();
+      await pool.query("SELECT 1");
+      return { connected: true, latencyMs: Date.now() - start };
     },
     close: () => pool.end(),
   };

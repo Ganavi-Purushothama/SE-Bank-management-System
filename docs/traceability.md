@@ -39,3 +39,12 @@ Original requirement documents are not retrospectively marked passed. This imple
 SAD/STP additionally reference SQL injection prevention and HTTPS as SR-006/007; these IDs are absent from the actual SRS but their controls are implemented (parameterized queries, production HTTPS origin and secure cookie enforcement). Actual TLS termination remains an operator responsibility. STP NF-007 and SRS version/section references are similarly inconsistent; concurrency is tested under NF-002/006 here.
 
 Tests use real compiled C++ for opening, deposit, withdrawal and settlement. PGlite fixtures serialize transactions because that engine has one connection. Only the dedicated PostgreSQL suite establishes multiconnection row-locking behavior. Browser tests use PGlite, not a mocked banking API; only the explicit API-failure UI test intercepts a request.
+
+## Sprint 1 issue mapping (#4 and #5)
+
+| Issue | Delivered by | Verification |
+|---|---|---|
+| #4 Database and backend foundation | `server/db.js` (pool, transaction wrapper, statement timeout query helper, ping, migration runner), `migrations/001_initial.sql` (schema, relationships, check constraints, audit index), `server/config.js` (env vars), `server/app.js` (health, database error mapping) | database health check, check constraint enforcement, and rollback tests in `tests/api.test.js` and `tests/postgres.test.js` |
+| #5 Core banking transactions | `server/banking.js` (deposit, withdraw, settlement, audit trail), `core/banking.hpp` & `core/main.cpp` (C++ integer arithmetic, bounds and available-funds enforcement, stderr diagnostics) | C++ unit boundary tests and financial operation tests in `tests/core.test.js` and `tests/api.test.js` |
+
+
