@@ -115,9 +115,12 @@ export async function auth(db, config) {
     next();
   }
   async function logout(req, res) {
-    await db.query("DELETE FROM sessions WHERE token_hash=$1", [
-      digest(req.cookies[cookieName]),
-    ]);
+    await db.transaction(async (c) => {
+      await c.query("DELETE FROM sessions WHERE token_hash=$1", [
+        digest(req.cookies[cookieName]),
+      ]);
+      await audit(c, "LOGOUT", req.user.id);
+    });
     res.clearCookie(cookieName, cookieOptions);
     res.json({ status: "OK" });
   }
