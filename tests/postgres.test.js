@@ -199,7 +199,7 @@ test(
     t.after(() => f.close());
     const admin = f.client(),
       customer = f.client();
-      
+
     await admin.request("/login", "POST", {
       accountNumber: "test-admin",
       password: adminPassword,
@@ -211,13 +211,15 @@ test(
         password: customerPassword,
       })
     ).body.data;
-    
+
     await customer.request("/login", "POST", {
       accountNumber: account.number,
       password: customerPassword,
     });
 
-    const initialBalanceResponse = await customer.request(`/accounts/${account.id}`);
+    const initialBalanceResponse = await customer.request(
+      `/accounts/${account.id}`,
+    );
     const initialBalance = initialBalanceResponse.body.data.balance;
 
     try {
@@ -228,13 +230,17 @@ test(
       // Expected failure handled
     }
 
-    const finalBalanceResponse = await customer.request(`/accounts/${account.id}`);
+    const finalBalanceResponse = await customer.request(
+      `/accounts/${account.id}`,
+    );
     const finalBalance = finalBalanceResponse.body.data.balance;
     assert.equal(finalBalance, initialBalance);
 
-    const txResponse = await customer.request(`/accounts/${account.id}/transactions`);
+    const txResponse = await customer.request(
+      `/accounts/${account.id}/transactions`,
+    );
     const successfulTx = txResponse.body.data.items.find(
-      (tx) => tx.type === 'WITHDRAWAL' && tx.amount === 999999
+      (tx) => tx.type === "WITHDRAWAL" && tx.amount === 999999,
     );
     assert.equal(successfulTx, undefined);
   },
