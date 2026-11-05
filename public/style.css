@@ -334,6 +334,24 @@ td button {
 .positive {
   color: #31804a;
 }
+.statement-totals {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+}
+.statement-table caption {
+  text-align: left;
+  padding: 12px 0;
+  color: var(--muted);
+}
+.statement-table td:nth-child(3),
+.statement-table td:nth-child(4) {
+  text-align: right;
+}
+.statement-reference {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
 .negative {
   color: #9a4e38;
 }

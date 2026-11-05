@@ -107,6 +107,7 @@ function frame() {
     : [
         ["overview", "Account overview"],
         ["history", "Transactions"],
+        ["statement", "Account statement"],
         ["profile", "Personal details"],
       ];
   root.innerHTML = `<div class="layout"><aside><div class="brand"><span class="mark">6</span> Bank Six</div><div><p class="eyebrow">${admin ? "Bank operations" : "Your workspace"}</p><nav aria-label="Main navigation">${tabs.map(([id, label]) => `<button data-tab="${id}" class="${state.tab === id ? "active" : ""}" ${state.tab === id ? 'aria-current="page"' : ""}>${label}</button>`).join("")}</nav></div><div class="aside-bottom">Simple, considered banking.<br>Team 6 · Academic project<br>INR · Indian rupees</div></aside><div><header><span class="subtle">${admin ? "Administration / Bank operations" : "Personal banking / Savings"}</span><div class="identity"><span class="avatar">${admin ? "BS" : escape(account?.name?.charAt(0) || "C")}</span><small>${admin ? "Administrator" : escape(account?.name)}</small><button id="logout">Sign out</button></div></header><main id="main" class="content" tabindex="-1"><div class="loading" role="status">Loading your banking workspace…</div></main></div></div>`;
@@ -176,6 +177,8 @@ async function customer(main) {
       state.tab = "history";
       render();
     };
+  } else if (state.tab === "statement") {
+    renderStatement(main, account);
   } else if (state.tab === "history") {
     const params = new URLSearchParams({ page: state.page, ...state.filter });
     const history = await api(`/accounts/${id}/transactions?${params}`);
@@ -216,6 +219,58 @@ async function customer(main) {
       }
     };
   }
+}
+function statementTable(items) {
+  if (!items.length)
+    return '<p class="empty">No transactions in this period. Your opening balance is carried forward.</p>';
+  return `<div class="table-wrap"><table class="statement-table"><caption>Committed transactions in chronological order (UTC)</caption><thead><tr><th>Date & time (UTC)</th><th>Transaction / reference</th><th>Credit (INR)</th><th>Debit (INR)</th><th>Balance (INR)</th></tr></thead><tbody>${items
+    .map((item) => {
+      const credit = ["OPENING", "DEPOSIT"].includes(item.type);
+      return `<tr><td>${escape(new Date(item.created_at).toISOString().replace("T", " ").replace("Z", ""))}</td><td>${escape(item.type)}<br><small class="statement-reference">${escape(item.id)}</small></td><td>${credit ? money(item.amount) : "—"}</td><td>${credit ? "—" : money(item.amount)}</td><td>${money(item.balance_after)}</td></tr>`;
+    })
+    .join("")}</tbody></table></div>`;
+}
+function renderStatement(main, account) {
+  const today = new Date().toISOString().slice(0, 10);
+  main.innerHTML =
+    heading(
+      "Account statement",
+      "Choose a period to review your balances and account activity.",
+    ) +
+    `<section class="card statement-controls"><form id="statement-form" class="filters">${field("from", "Statement start date", "date", `required min="0001-01-01" max="9999-12-31" value="${today.slice(0, 8)}01"`)}${field("to", "Statement end date", "date", `required min="0001-01-01" max="9999-12-31" value="${today}"`)}<button class="primary">Generate statement</button><p class="error span-2" role="alert"></p></form><p class="subtle">Both dates are included. Dates and statement times use UTC. Credits include the opening deposit; debits include withdrawals and settlement. Up to 10,000 transactions per statement.</p></section><div id="statement-result" aria-live="polite"></div>`;
+  const form = main.querySelector("#statement-form"),
+    result = main.querySelector("#statement-result");
+  form.oninput = () => {
+    result.replaceChildren();
+    form.querySelector(".error").textContent = "";
+  };
+  form.onsubmit = async (event) => {
+    event.preventDefault();
+    result.replaceChildren();
+    form.querySelector(".error").textContent = "";
+    if (form.elements.from.value > form.elements.to.value) {
+      formError(form, new Error("Start date must be on or before end date"));
+      return;
+    }
+    const params = new URLSearchParams(new FormData(form));
+    busy(form, true);
+    form.querySelectorAll("input").forEach((input) => (input.disabled = true));
+    result.innerHTML =
+      '<p class="loading" role="status">Generating your statement…</p>';
+    try {
+      const s = await api(`/accounts/${account.id}/statement?${params}`);
+      if (!main.isConnected || !state.me) return;
+      result.innerHTML = `<article class="card account-statement" aria-labelledby="statement-title"><div class="card-top"><div><p class="eyebrow">Bank Six · INR</p><h2 id="statement-title">Account statement</h2></div></div><dl class="details"><div><dt>Account holder</dt><dd>${escape(s.account.name)}</dd></div><div><dt>Account number</dt><dd>${escape(s.account.number)}</dd></div><div><dt>Account type</dt><dd>${escape(s.account.type)} · ${escape(s.currency)}</dd></div><div><dt>Statement period (UTC)</dt><dd>${escape(s.period.from)} to ${escape(s.period.to)}</dd></div><div><dt>Generated at (UTC)</dt><dd>${escape(new Date(s.generatedAt).toISOString())}</dd></div><div><dt>Transactions</dt><dd>${s.transactionCount}</dd></div></dl><dl class="details statement-totals"><div><dt>Opening balance</dt><dd>${money(s.openingBalance)}</dd></div><div><dt>Total credits</dt><dd>${money(s.totalCredits)}</dd></div><div><dt>Total debits</dt><dd>${money(s.totalDebits)}</dd></div><div><dt>Closing balance</dt><dd>${money(s.closingBalance)}</dd></div></dl>${statementTable(s.items)}<p class="subtle">Opening balance + credits − debits = closing balance. Balances describe the selected period at generation time.</p><p class="subtle">Team 6 academic banking project.</p></article>`;
+    } catch (error) {
+      result.replaceChildren();
+      formError(form, error);
+    } finally {
+      busy(form, false);
+      form
+        .querySelectorAll("input")
+        .forEach((input) => (input.disabled = false));
+    }
+  };
 }
 function transaction(operation) {
   const label = operation === "deposit" ? "Deposit" : "Withdraw";
