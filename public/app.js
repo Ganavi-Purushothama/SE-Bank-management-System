@@ -1,3 +1,4 @@
+import { statementCsv } from "./statement-csv.js";
 const root = document.querySelector("#app");
 const dialog = document.querySelector("#transaction-dialog");
 const state = {
@@ -261,6 +262,24 @@ function renderStatement(main, account) {
       const s = await api(`/accounts/${account.id}/statement?${params}`);
       if (!main.isConnected || !state.me) return;
       result.innerHTML = `<article class="card account-statement" aria-labelledby="statement-title"><div class="card-top"><div><p class="eyebrow">Bank Six · INR</p><h2 id="statement-title">Account statement</h2></div></div><dl class="details"><div><dt>Account holder</dt><dd>${escape(s.account.name)}</dd></div><div><dt>Account number</dt><dd>${escape(s.account.number)}</dd></div><div><dt>Account type</dt><dd>${escape(s.account.type)} · ${escape(s.currency)}</dd></div><div><dt>Statement period (UTC)</dt><dd>${escape(s.period.from)} to ${escape(s.period.to)}</dd></div><div><dt>Generated at (UTC)</dt><dd>${escape(new Date(s.generatedAt).toISOString())}</dd></div><div><dt>Transactions</dt><dd>${s.transactionCount}</dd></div></dl><dl class="details statement-totals"><div><dt>Opening balance</dt><dd>${money(s.openingBalance)}</dd></div><div><dt>Total credits</dt><dd>${money(s.totalCredits)}</dd></div><div><dt>Total debits</dt><dd>${money(s.totalDebits)}</dd></div><div><dt>Closing balance</dt><dd>${money(s.closingBalance)}</dd></div></dl>${statementTable(s.items)}<p class="subtle">Opening balance + credits − debits = closing balance. Balances describe the selected period at generation time.</p><p class="subtle">Team 6 academic banking project.</p></article>`;
+      const actions = document.createElement("div");
+      actions.className = "actions statement-actions";
+      actions.innerHTML =
+        '<button type="button" id="print-statement">Print / Save as PDF</button><button type="button" id="download-statement">Download CSV</button>';
+      result.querySelector(".card-top").append(actions);
+      actions.querySelector("#print-statement").onclick = () => window.print();
+      actions.querySelector("#download-statement").onclick = () => {
+        const url = URL.createObjectURL(
+          new Blob([statementCsv(s)], { type: "text/csv;charset=utf-8" }),
+        );
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `statement-${s.account.number}-${s.period.from}-to-${s.period.to}.csv`;
+        document.body.append(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      };
     } catch (error) {
       result.replaceChildren();
       formError(form, error);
