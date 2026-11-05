@@ -61,6 +61,24 @@ Open **http://localhost:3000** using exactly that hostname. Sign in with the adm
 
 Only one application terminal is needed. Express serves the frontend and invokes C++ automatically; do not run a separate frontend development server. PostgreSQL must already be running. On bash, copy the environment file with `cp .env.example .env`; other npm commands are the same.
 
+## Account statements (SCRUM-29)
+
+Sign in as a customer and select **Account statement** in the navigation. Choose
+a start and end date, then **Generate statement**. Both dates are included and
+use UTC. The formatted statement shows account details, opening and closing
+balances, credit/debit totals, and every committed transaction in the period.
+Periods without activity carry the opening balance forward.
+
+Use **Print / Save as PDF** to open the browser print dialog and choose a printer
+or **Save as PDF**. **Download CSV** exports the same generated snapshot, including
+account details, totals, references and exact two-decimal INR amounts. Changing
+either date clears the old statement; generate again before exporting.
+
+Statements include opening deposits as credits and settlements as debits. They
+support up to 10,000 transactions; a larger result asks for a shorter period and
+is never silently truncated. Totals outside JavaScript's safe integer range are
+also rejected. No database migration or additional package is needed.
+
 ## Configuration
 
 | Variable | Meaning / default |
