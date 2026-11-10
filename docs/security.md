@@ -28,6 +28,40 @@ This is an academic implementation, not a security certification. Review covers 
 | Low | Closure confirmation reflects a balance read when the dialog opens; a concurrent transaction can change final settlement | Admin opens confirmation while customer transacts | Closure uses and settles the locked current database balance. Admin must verify returned settledAmount; a versioned confirmation would improve the workflow. |
 | Low | Process-per-operation C++ spawn and password hashing can consume resources under abuse | Repeated authenticated requests create C++ processes | Bounded IPC/timeouts, body limits and login throttling implemented; sustained hostile load and DDoS resilience not assessed. |
 
+## SCRUM-38 validation findings — 10 November 2026
+
+Scope: application authentication/authorization, invalid financial requests,
+balance/ledger consistency, SQL failure rollback, real PostgreSQL concurrency,
+browser workflows and the installed dependency advisory graph. Four new tests
+are in `tests/security.test.js` and `tests/integrity.test.js`, and execute in
+both default and PostgreSQL suites. Existing security tests also passed.
+
+| Finding | Evidence | Disposition |
+|---|---|---|
+| No critical defect identified in the executed checks | 38 default-suite passes; 26 real PostgreSQL passes; 4 browser passes | Local verification complete for the tested cases; no application fix was required |
+| Administrator actions reject anonymous, forged and customer sessions | `security.test.js`: all five admin route/method combinations return 401/403; account state remains unchanged | Passed |
+| Reauthentication revokes the presented old session | Old cookie rejected with 401, new cookie works; logout removes remaining session | Passed |
+| Invalid requests and key conflicts do not mutate financial records | `integrity.test.js`: invalid amounts, overdraft, duplicate request and conflicting key; balance equals signed ledger net | Passed |
+| Audit failure is atomic with balance and ledger writes | Trigger throws at audit insert after financial updates; original snapshot retained; same-key retry commits once after trigger removal | Passed; strengthens earlier ledger-failure coverage |
+| Real multiconnection checks preserve minimum balance and idempotency | Ten duplicate deposits produce one transaction; four of ten competing withdrawals succeed; second connection sees committed balance | Passed on PostgreSQL 18.4 |
+| Installed dependency audit has no reported advisories | `dependency-audit.json`: total/high/critical all zero | No dependency remediation required at scan time |
+| Initial process/network restrictions prevented completion of some tools | PostgreSQL initialization, audit request and browser cleanup needed a rerun with appropriate access | Resolved as execution-environment issues; final commands exit 0 |
+
+The default suite's single skip is an explicitly PostgreSQL-only snapshot check;
+it passed in the PostgreSQL run. Fault-injection `request_failed` log entries
+are expected and do not indicate failed assertions. No coverage percentage,
+independent penetration-test result or remote CI result is asserted.
+
+The residual risks in the table above remain open: permanent-lockout denial of
+service, page-memory retry recovery, broad admin powers, per-process limiting,
+privileged database tampering and live closure balance changes. Public TLS,
+MFA/dual control, durable retry recovery and operational backup/recovery were
+not introduced or validated here. Passing the course-project acceptance checks
+does not resolve these separate operational concerns.
+
+See [captured evidence](evidence/scrum-38/README.md) and
+[acceptance mapping](scrum-38-jira-evidence.md).
+
 ## Safe verification
 
 `npm test` tests cross-account denial, wrong roles, injection payloads, mass assignment, CSRF/origin protection, lockout, expiry, logout, invalid amounts, idempotency and rollback. `npm run test:postgres` repeats the API suite on real PostgreSQL and exercises actual locks. `npm run test:e2e` checks customer/admin views and error handling. `npm audit` assesses the installed dependency graph; a clean audit does not prove absence of vulnerabilities.

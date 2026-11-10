@@ -17,7 +17,31 @@ Run from the repository root after `npm ci` and `npm run build`. All test data i
 
 There is no TypeScript or frontend bundler. Do not invent type-check/build tasks for this native JS/HTML app. Browser traces/screenshots on failure are written under ignored `test-results/`; Playwright can display retained traces using `npx playwright show-trace <trace.zip>`.
 
-## Latest unit and regression results (SCRUM-36)
+## Latest security and data-integrity results (SCRUM-38)
+
+Verified 10 November 2026 on Windows, Node 24.22.1, npm 11.19.1, G++ 16.2.0,
+PostgreSQL 18.4 and Playwright 1.64.1 / Chromium.
+
+| Check | Result |
+|---|---|
+| `npm test` | 38 passed, 0 failed, 1 PostgreSQL-only skip |
+| `npm run test:postgres` | 26 passed, 0 failed, 0 skipped |
+| `npm run test:e2e` | 4 passed |
+| `npm audit --json` | 0 reported vulnerabilities |
+| Lint / formatting / `git diff --check 2271287` | Passed |
+
+Four new integration tests run in both PGlite and PostgreSQL: denied admin
+actions, rotated-session replay rejection, rejected transactions with unchanged
+balance/ledger/audit, and audit-write failure rollback with safe idempotent retry.
+The PostgreSQL run also executes the concurrent snapshot case skipped by the
+default suite. Counts overlap; there is no unique coverage percentage claim.
+
+See [SCRUM-38 execution outputs and exact setup](evidence/scrum-38/README.md),
+[findings](security.md#scrum-38-validation-findings--10-november-2026) and
+[Jira evidence](scrum-38-jira-evidence.md). These results supersede older counts
+for the current source; the SCRUM-36 record below remains historical evidence.
+
+## Previous unit and regression results (SCRUM-36)
 
 Verified 10 November 2026 on Windows with Node 24.22.1 (x64), npm 11.19.1
 and G++ 16.2.0. Run from the repository root with Node >=22.12, npm, G++ with
