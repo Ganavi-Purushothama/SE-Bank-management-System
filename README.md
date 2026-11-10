@@ -99,6 +99,7 @@ Currency is INR; all stored and returned monetary balances use integer paise. No
 ## Checks
 
 ```powershell
+npm run test:unit
 npm test
 npm run test:postgres
 npx playwright install chromium
