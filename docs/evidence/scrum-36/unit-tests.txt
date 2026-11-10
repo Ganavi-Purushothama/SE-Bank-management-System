@@ -1,0 +1,33 @@
+
+> team6-bank-management@1.0.0 test:unit
+> npm run build && node --test --test-concurrency=1 tests/core.test.js tests/validation.test.js tests/statement-period.test.js tests/statement-csv.test.js
+
+
+> team6-bank-management@1.0.0 build
+> node scripts/build.mjs
+
+✔ money parser accepts exact minor units and rejects financial edge cases (0.785ms)
+✔ field, identifier, password, pagination and configuration validation (0.3296ms)
+✔ C++ real executable enforces deposit, withdrawal, minimum, opening, settlement and overflow (885.7295ms)
+✔ C++ rejects malformed, oversized, out-of-range IPC input (83.9046ms)
+✔ password hashing uses per-password salts and verifies credentials (185.6664ms)
+✔ issue #8: phone validator accepts valid formats and rejects invalid numbers (0.3876ms)
+✔ issue #5: C++ rule engine enforces boundary conditions and available funds (183.129ms)
+✔ SCRUM-36: opening and deposit accept exact limits and reject one paise beyond (162.7832ms)
+✔ SCRUM-36: financial rules reject invalid balances, amounts and minimums (837.6ms)
+✔ SCRUM-36: withdrawals preserve exact paise across a deposit and full settlement (161.5238ms)
+✔ CSV exports metadata, exact paise, quoting and formula-safe customer text (1.961ms)
+✔ statement period requires real, ordered calendar dates (2.4273ms)
+✔ SCRUM-36: amount parsing preserves paise at fractional and maximum boundaries (1.4106ms)
+✔ SCRUM-36: passwords enforce minimum length and UTF-8 byte limits (0.1661ms)
+✔ SCRUM-36: customer text handles optional values, limits and control characters (0.2193ms)
+✔ SCRUM-36: phone numbers enforce seven to fifteen digits (0.2018ms)
+✔ SCRUM-36: pagination accepts endpoints and rejects ambiguous input (0.1573ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2729.1009

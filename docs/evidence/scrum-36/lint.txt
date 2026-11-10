@@ -1,0 +1,4 @@
+
+> team6-bank-management@1.0.0 lint
+> eslint .
+
