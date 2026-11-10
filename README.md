@@ -4,6 +4,8 @@ Functional Team 6 academic banking application: HTML/CSS/JavaScript frontend, No
 
 Original submitted [SRS](SRS.md), [SAD](SAD_Bank_Management_System.md), [STP](STP.md), PDFs and UML diagrams remain preserved. The previous README is archived in [docs/original-readme.md](docs/original-readme.md). See [audit and architecture decisions](docs/audit-and-decisions.md) for document conflicts and implementation policies.
 
+**Sprint 1 evaluation:** [Open the four-member handoff, readiness checklist and one-minute demo](docs/evaluation/README.md). The kit maps responsibilities to the actual backlog, explains all modules, and distinguishes recorded evidence from peer reviews/acceptance still requiring team action.
+
 ## Requirements
 
 - Node.js **22.12 or newer** and npm (verified with Node 24.13.0 / npm 11.21.1).
@@ -13,7 +15,7 @@ Original submitted [SRS](SRS.md), [SAD](SAD_Bank_Management_System.md), [STP](ST
 
 ## Run locally
 
-Use the `implementation/bank-system` branch for the implemented application while its pull request is under review. The original project artifacts remain preserved.
+The implemented application is on `main`, merged through [PR #13](https://github.com/Ganavi-Purushothama/SE-Bank-management-System/pull/13). The original project artifacts remain preserved.
 
 ### Easiest local startup
 
@@ -33,7 +35,7 @@ On another machine, install PostgreSQL binaries or set POSTGRES_BIN to their bin
 ### Manual PostgreSQL setup
 
 ```powershell
-git clone --branch implementation/bank-system https://github.com/Ganavi-Purushothama/SE-Bank-management-System.git
+git clone https://github.com/Ganavi-Purushothama/SE-Bank-management-System.git
 cd SE-Bank-management-System
 npm ci
 npm run build

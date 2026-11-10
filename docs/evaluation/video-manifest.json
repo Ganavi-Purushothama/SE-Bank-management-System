@@ -1,0 +1,16 @@
+{
+  "file": "sprint1-demo.webm",
+  "durationSeconds": 60,
+  "codec": "VP9",
+  "container": "WebM",
+  "width": 1280,
+  "height": 900,
+  "framesPerSecond": 25,
+  "audio": false,
+  "captions": true,
+  "bytes": 1137061,
+  "sha256": "0f74085d84b257e18b6a7a0e7ad852d265976c321bc76fca1ccde8bd701be3a5",
+  "applicationCommit": "514af32640b70d47ecff1d989d4db8f6737562b3",
+  "dataPolicy": "Fictional data only; isolated PostgreSQL demo schema removed after recording",
+  "verification": "FFmpeg reported duration 00:01:00.00; workflow assertions passed; frames at 5,18,35,48,56 seconds visually inspected"
+}

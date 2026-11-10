@@ -29,6 +29,7 @@ export function text(value, label, max, required = true) {
   );
   return result;
 }
+
 export function password(value) {
   assert(
     typeof value === "string" &&
