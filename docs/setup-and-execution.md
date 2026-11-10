@@ -162,3 +162,75 @@ in the configured database. Do not rerun clone/provisioning on each restart.
 Changing the HTTP port requires matching PORT and APP_ORIGIN, for example `3001`
 and `http://localhost:3001`. Always use the same hostname when signing in and
 submitting forms; localhost and 127.0.0.1 are different origins.
+
+## Verify execution and demonstrate
+
+Keep the application terminal running and use a second terminal/browser for
+verification. A normal server prints `Bank portal ready at <APP_ORIGIN>`.
+Open `<APP_ORIGIN>/api/health` in the browser: expect HTTP 200, `status: OK` and
+`database.connected: true`. Then open APP_ORIGIN itself for the sign-in screen.
+
+1. Sign in with the administrator you provisioned or the helper's private login.
+2. Open a fictional customer account with an initial deposit of INR 1,000 and a
+   unique password. Save its generated account number privately.
+3. Sign out and sign in using that customer number/password. Confirm INR 1,000.
+4. Deposit INR 250.55, then withdraw INR 50.55. Expect INR 1,200 and both entries
+   in transaction history. Attempt INR 1,200.01: expect rejection and no change.
+5. Generate an account statement for today's UTC date. Check opening + credits
+   minus debits = closing; download CSV and compare amounts with the screen.
+6. Stop and restart only the app using the appropriate command for your route.
+   Sign in again and verify the account, balance and history still exist.
+7. Sign out. Keep fictional data for future demonstrations; no reset is needed.
+
+There is no default customer password or normal-app test login. Credentials in
+the testing guide work only in the disposable browser-test server.
+
+## Verification commands
+
+```bash
+npm run test:unit
+npm test
+npm run test:postgres
+npm run lint
+npm run format:check
+```
+
+These tests never use the normal DATABASE_URL. The PostgreSQL suite creates a
+temporary cluster and tests actual migration/admin/server entrypoints, restart,
+locking and persistence. Set POSTGRES_BIN where required. The default test suite
+uses PGlite and skips a PostgreSQL-only snapshot case; this case runs in the
+PostgreSQL suite. Do not interpret a skipped test as a passed test.
+
+Browser checks require a separate download on a new machine:
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
+On Linux, required browser OS libraries may need your OS administrator's help
+(`npx playwright install --with-deps chromium` installs those dependencies when
+authorized). Browser tests start an isolated server on port 4173 and refuse to
+reuse an unknown running server. They do not require the normal app to run.
+
+## Troubleshooting
+
+| Symptom | What to check |
+|---|---|
+| `node`, `npm`, `g++` or `psql` not found | Install the missing tool, add its executable directory to PATH and restart the terminal |
+| PostgreSQL binaries not found by `npm run local` | Set POSTGRES_BIN to the bin directory containing initdb/pg_ctl/postgres; psql alone is not sufficient |
+| Port 55432 already in use on first helper run | Identify the existing listener; use Route B with its own dedicated database or free that port only if you own the listener |
+| HTTP port 3000 busy | Choose another PORT and matching APP_ORIGIN; helper derives its origin from PORT |
+| Database connection/authentication failure | Check service, host, port, role, database and URL-encoded password; clear stale exported DATABASE_URL; do not reset unrelated database passwords |
+| `schema_migrations` missing | Run `npm run migrate` against the same database configured for startup |
+| Admin provisioning rejects placeholder/duplicate | Set your own valid password for a new login; an existing admin is not overwritten or reset |
+| Origin or CSRF error | Open exactly APP_ORIGIN, refresh and sign in again; match hostname and port |
+| Engine unavailable | Run `npm run build` successfully on this OS and check CXX/PATH |
+| Correct password rejected after three failures | Use another admin to unlock the customer; admin recovery requires an authorized database operator |
+| Production requires HTTPS | Use NODE_ENV=development for loopback HTTP; real production requires actual TLS and HTTPS APP_ORIGIN |
+| `npm ci`/browser download fails | Check network access, registry/proxy settings and available disk space; do not substitute an unreviewed lockfile |
+
+Keep `.env`, `.env.before-local`, generated credentials, binaries and database
+directories private/ignored. Do not delete or reset a cluster to fix an ordinary
+startup error. PostgreSQL backup/restore and hosted deployment are separate
+operator tasks; these instructions cover local installation and execution.
