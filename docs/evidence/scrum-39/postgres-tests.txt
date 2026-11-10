@@ -1,0 +1,98 @@
+
+> team6-bank-management@1.0.0 test:postgres
+> npm run build && node scripts/test-postgres.mjs
+
+
+> team6-bank-management@1.0.0 build
+> node scripts/build.mjs
+
+{"event":"database_pool_client_removed"}
+✔ HTTP parser, request limits and brute-force throttling reject unsafe requests (1947.239ms)
+{"event":"database_pool_client_removed"}
+▶ complete account lifecycle, security boundaries and financial consistency
+  ✔ unauthenticated access, origin protection, malformed login and secure headers (56.6745ms)
+  ✔ admin creation, unique identifiers, initial validation and password hashing (1072.395ms)
+  ✔ ownership, RBAC, CSRF and mass assignment enforced (13.6768ms)
+  ✔ real deposit, idempotent retries, collision detection, withdrawal, balance and ledger (94.7657ms)
+  ✔ bad amounts and overdrafts leave balances unchanged (46.4924ms)
+  ✔ concurrent withdrawal requests serialize without overdraft (106.0968ms)
+  ✔ contact update, safe search and missing records (8.4753ms)
+  ✔ issue #4: database connectivity health check and constraint error handling (2.528ms)
+{"event":"database_pool_client_removed"}
+  ✔ three failures persist lockout, invalidate sessions and require admin unlock (318.2518ms)
+  ✔ session expiry and logout revoke protected access (66.7123ms)
+  ✔ admin closure atomically settles funds, preserves ledger and denies future access (112.7499ms)
+{"event":"database_pool_client_removed"}
+✔ complete account lifecycle, security boundaries and financial consistency (2159.0802ms)
+{"event":"database_pool_client_removed"}
+{"event":"request_failed","requestId":"d3c4953b-1d86-42f6-a107-ec0864efe89d","code":"P0001"}
+{"event":"database_pool_client_removed"}
+✔ database failure after balance update rolls back the entire financial operation (568.2606ms)
+{"event":"database_pool_client_removed"}
+{"event":"request_failed","requestId":"6b3cb8cf-a971-4fd0-833c-88fe5dbfa0c1","code":"INTERNAL"}
+{"event":"database_pool_client_removed"}
+✔ engine unavailability preserves account state (498.7615ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ SCRUM-38: invalid transactions preserve balance, ledger and audit records (688.751ms)
+{"event":"database_pool_client_removed"}
+{"event":"request_failed","requestId":"c55638d4-9112-424d-bdad-9ba31946a3c1","code":"P0001"}
+{"event":"database_pool_client_removed"}
+✔ SCRUM-38: audit failure rolls back balance and ledger and permits a safe retry (480.4158ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ real PostgreSQL migrations are repeatable (170.0004ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ real PostgreSQL serves 500 fictional customer sessions (937.7656ms)
+ℹ 500 concurrent balance/session reads (100 pooled HTTP sockets): total 485ms; p95 201ms
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ real PostgreSQL concurrent idempotency and minimum balance use row locks (1412.0621ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ SCRUM-38: anonymous, forged and customer sessions cannot reach administrator actions (496.4395ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ SCRUM-38: reauthentication rotates the cookie and rejects replay of the old session (389.6226ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ documented migration/admin/start entrypoints and restart preserve data and sessions (1546.2704ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ statements include the full period with reconciled balances and ownership checks (608.6112ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ statement limits reject truncation and unsafe monetary totals (523.0256ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ real PostgreSQL statement snapshot stays consistent across a concurrent deposit (420.0655ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13917.6624

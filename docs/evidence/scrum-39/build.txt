@@ -1,0 +1,3 @@
+
+> team6-bank-management@1.0.0 build
+> node scripts/build.mjs

@@ -229,8 +229,25 @@ reuse an unknown running server. They do not require the normal app to run.
 | Correct password rejected after three failures | Use another admin to unlock the customer; admin recovery requires an authorized database operator |
 | Production requires HTTPS | Use NODE_ENV=development for loopback HTTP; real production requires actual TLS and HTTPS APP_ORIGIN |
 | `npm ci`/browser download fails | Check network access, registry/proxy settings and available disk space; do not substitute an unreviewed lockfile |
+| npm reports embedded-Postgres install scripts not covered by allowScripts | Installation may still succeed; use POSTGRES_BIN with separately installed/portable PostgreSQL binaries as in the verified setup. Review the named package/script before approving it; blanket script approval is unnecessary for that route |
 
 Keep `.env`, `.env.before-local`, generated credentials, binaries and database
 directories private/ignored. Do not delete or reset a cluster to fix an ordinary
 startup error. PostgreSQL backup/restore and hosted deployment are separate
 operator tasks; these instructions cover local installation and execution.
+
+## Clean-copy verification
+
+On 10 November 2026, the committed source was exported to an isolated directory
+without `.env`, `node_modules`, application data or compiled binaries. A fresh
+`npm ci` installed 177 packages, the C++ build succeeded, lint/formatting passed,
+and all 26 real PostgreSQL tests passed with no skips. This includes migration,
+administrator provisioning, server startup, restart and persisted account/session
+checks through the normal entrypoint files.
+
+The OS, Node/G++ and portable PostgreSQL binaries were reused. The database tests
+supplied isolated database/origin/admin environment settings rather than using
+normal application secrets. Interactive psql role creation, the persistent local
+helper and the manual browser demo were reviewed but not repeated in this clean
+copy; a teammate's independent first-time walkthrough remains useful. See the
+[full execution record](evidence/scrum-39/README.md) for commands and limitations.
