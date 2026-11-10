@@ -4,6 +4,8 @@
 
 Security/data-integrity verification updated 10 November 2026 (SCRUM-38).
 
+Installation/execution documentation verified 10 November 2026 (SCRUM-39).
+
 ## Delivered
 
 Implemented the previously documentation-only repository as a connected application in the existing Git checkout. Customer features: account-number/password login, current/available balance, deposits, withdrawals, confirmations, recent activity, paginated/date/type-filtered mini-statements, contact updates and logout. Administrator features: provision customers, generated unique account numbers, account search/details/history, customer access unlock, full-balance settlement/closure and security-event review.
@@ -114,9 +116,25 @@ Load check: **500 distinct customer sessions and 500 outstanding authenticated r
 
 Browser tests exercise the complete deposit/withdraw/history/admin workflow against the real API/C++/test database, cross-customer denial, closure session invalidation, logout, customer/admin navigation, masked passwords, native form validation, API loading/failure/retry, stored XSS rendered as literal text, and a 390px layout without document overflow. Dashboard/mobile screenshots were generated and visually reviewed. Initial test-locator failures introduced while extending XSS coverage were corrected; no assertion was removed.
 
+## Installation/execution verification — SCRUM-39
+
+Added [portable setup instructions](setup-and-execution.md) and corrected the
+README's outdated branch/machine path. Exported committed source revision
+`ba00a9b` to a clean directory without node_modules, environment, application
+data or compiled engine. Fresh npm ci installed 177 packages; the C++ build,
+lint/format checks and all 26 real PostgreSQL checks passed without skips.
+The startup test exercises migration, admin creation, server readiness and
+account/session persistence after restart. The lockfile SHA-256 was unchanged.
+
+Reused existing Windows/Node/G++/portable PostgreSQL. Tests injected isolated
+environment settings; manual psql role creation, the persistent helper and manual
+browser walkthrough were not repeated. No application logic/dependencies changed.
+See [actual outputs and limits](evidence/scrum-39/README.md) and
+[acceptance evidence](scrum-39-jira-evidence.md).
+
 ## Running the normal application
 
-Use the `implementation/bank-system` branch for the application while its pull request is under review. GitHub's main branch receives the implementation only after the team merges it.
+Use the published `codex/scrum-39-installation-execution` review branch while this work is under review, or main after it is merged. The [setup guide](setup-and-execution.md) contains the current full instructions.
 
 1. Install Node/G++/PostgreSQL and run `npm ci`, then `npm run build`.
 2. Create a dedicated PostgreSQL role/database as described in README.
