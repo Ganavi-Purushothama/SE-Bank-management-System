@@ -1,0 +1,54 @@
+
+> team6-bank-management@1.0.0 test
+> npm run build && node --test --test-concurrency=1 tests/core.test.js tests/validation.test.js tests/api.test.js tests/statement-period.test.js tests/statement-csv.test.js tests/statements.test.js
+
+
+> team6-bank-management@1.0.0 build
+> node scripts/build.mjs
+
+✔ HTTP parser, request limits and brute-force throttling reject unsafe requests (2215.5152ms)
+▶ complete account lifecycle, security boundaries and financial consistency
+  ✔ unauthenticated access, origin protection, malformed login and secure headers (56.1724ms)
+  ✔ admin creation, unique identifiers, initial validation and password hashing (914.3835ms)
+  ✔ ownership, RBAC, CSRF and mass assignment enforced (11.3082ms)
+  ✔ real deposit, idempotent retries, collision detection, withdrawal, balance and ledger (85.9181ms)
+  ✔ bad amounts and overdrafts leave balances unchanged (44.3887ms)
+  ✔ concurrent withdrawal requests serialize without overdraft (67.9ms)
+  ✔ contact update, safe search and missing records (12.2719ms)
+  ✔ issue #4: database connectivity health check and constraint error handling (2.5163ms)
+  ✔ three failures persist lockout, invalidate sessions and require admin unlock (255.6142ms)
+  ✔ session expiry and logout revoke protected access (55.8189ms)
+  ✔ admin closure atomically settles funds, preserves ledger and denies future access (97.0375ms)
+✔ complete account lifecycle, security boundaries and financial consistency (2072.0968ms)
+{"event":"request_failed","requestId":"f7186c1f-4494-4652-957b-fdd80f60909a","code":"P0001"}
+✔ database failure after balance update rolls back the entire financial operation (673.08ms)
+{"event":"request_failed","requestId":"19f9f37a-ee84-483d-9a15-5a5b66ee86ec","code":"INTERNAL"}
+✔ engine unavailability preserves account state (641.7726ms)
+✔ money parser accepts exact minor units and rejects financial edge cases (0.8141ms)
+✔ field, identifier, password, pagination and configuration validation (0.3611ms)
+✔ C++ real executable enforces deposit, withdrawal, minimum, opening, settlement and overflow (289.2586ms)
+✔ C++ rejects malformed, oversized, out-of-range IPC input (78.9523ms)
+✔ password hashing uses per-password salts and verifies credentials (185.6127ms)
+✔ issue #8: phone validator accepts valid formats and rejects invalid numbers (0.3792ms)
+✔ issue #5: C++ rule engine enforces boundary conditions and available funds (170.5282ms)
+✔ SCRUM-36: opening and deposit accept exact limits and reject one paise beyond (144.3312ms)
+✔ SCRUM-36: financial rules reject invalid balances, amounts and minimums (840.0729ms)
+✔ SCRUM-36: withdrawals preserve exact paise across a deposit and full settlement (136.5002ms)
+✔ CSV exports metadata, exact paise, quoting and formula-safe customer text (1.9482ms)
+✔ statement period requires real, ordered calendar dates (2.4533ms)
+✔ statements include the full period with reconciled balances and ownership checks (1073.3996ms)
+✔ statement limits reject truncation and unsafe monetary totals (777.67ms)
+﹣ real PostgreSQL statement snapshot stays consistent across a concurrent deposit (0.1492ms) # SKIP
+✔ SCRUM-36: amount parsing preserves paise at fractional and maximum boundaries (1.3025ms)
+✔ SCRUM-36: passwords enforce minimum length and UTF-8 byte limits (0.1476ms)
+✔ SCRUM-36: customer text handles optional values, limits and control characters (1.5339ms)
+✔ SCRUM-36: phone numbers enforce seven to fifteen digits (0.2081ms)
+✔ SCRUM-36: pagination accepts endpoints and rejects ambiguous input (0.169ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 9999.8638

@@ -40,6 +40,20 @@ SAD/STP additionally reference SQL injection prevention and HTTPS as SR-006/007;
 
 Tests use real compiled C++ for opening, deposit, withdrawal and settlement. PGlite fixtures serialize transactions because that engine has one connection. Only the dedicated PostgreSQL suite establishes multiconnection row-locking behavior. Browser tests use PGlite, not a mocked banking API; only the explicit API-failure UI test intercepts a request.
 
+## SCRUM-36 acceptance mapping
+
+| Acceptance criterion | Automated evidence |
+|---|---|
+| Core banking functions have appropriate unit tests | `tests/core.test.js`: actual C++ opening, deposit, withdrawal, settlement and balance assertions; `tests/validation.test.js`: independent input validation |
+| Valid and invalid inputs are tested | Accepted decimal/phone/password/text/page inputs and rejected malformed/oversized inputs; unknown operation and invalid C++ balance/amount/minimum values |
+| Boundary conditions are included | Exact opening minimum and one paise below; maximum deposit and overflow; withdrawal to zero/minimum and one paise beyond; UTF-8 password byte limits and phone digit limits |
+| Test results are reproducible and documented | `npm run test:unit`: 17 passed, no failures/skips; `npm test`: 34 passed, no failures, one PostgreSQL-only integration skip; dated commands/environment/output under `docs/evidence/scrum-36/` |
+
+Results dated 10 November 2026. Unit and regression pass counts overlap. This
+mapping establishes SCRUM-36's unit-testing evidence; it does not claim a code
+coverage percentage, completion of SCRUM-38, or execution of remote CI. See
+[Jira evidence](scrum-36-jira-evidence.md) for the review handoff.
+
 ## Sprint 1 issue mapping (#4 and #5)
 
 | Issue | Delivered by | Verification |

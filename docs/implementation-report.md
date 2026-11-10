@@ -2,6 +2,8 @@
 
 26 October 2026 · Team 6 Bank Management System
 
+Unit/regression verification updated 10 November 2026 (SCRUM-36).
+
 ## Delivered
 
 Implemented the previously documentation-only repository as a connected application in the existing Git checkout. Customer features: account-number/password login, current/available balance, deposits, withdrawals, confirmations, recent activity, paginated/date/type-filtered mini-statements, contact updates and logout. Administrator features: provision customers, generated unique account numbers, account search/details/history, customer access unlock, full-balance settlement/closure and security-event review.
@@ -27,7 +29,37 @@ The original SRS, SAD, STP, SRS PDF and UML diagrams remain unchanged. README wa
 
 The [API guide](api.md) documents every endpoint, inputs/access, results/errors and retry behavior. The [database guide](architecture-and-database.md) explains tables, transaction boundaries and migration/reset procedures. No existing database was reset, and no real account data or credentials were used.
 
-## Final executed checks
+## Latest executed checks — SCRUM-36, 10 November 2026
+
+Verified on Windows with Node 24.22.1 (`win32/x64`), npm 11.19.1 and G++
+16.2.0 (MSYS2 Rev3). Both test commands compile the actual C++17 engine.
+
+| Check | Actual result |
+|---|---|
+| `npm run test:unit` | **17 passed**, 0 failed, 0 skipped; no HTTP server or database |
+| `npm test` | **34 passed**, 0 failed, **1 skipped** out of 35 discovered; units plus isolated PGlite integration |
+| `npm run lint` | Passed |
+| `npm run format:check` | Passed |
+| `git diff --check` | Passed |
+| Real PostgreSQL / browser E2E / dependency audit / remote CI | Not rerun for SCRUM-36; historical results below are not current verification |
+
+Added eight regression tests: three for exact banking limits, invalid rule
+arguments and paise preservation; five for decimal amounts, UTF-8 password
+limits, customer text, phone digit limits and pagination. Added `test:unit` to
+make individual-component verification independent of database fixtures.
+
+The 17 unit tests are included in the 34 regression passes; these are not
+additive counts or a coverage percentage. The skipped integration case requires
+real PostgreSQL to verify a statement snapshot under a concurrent deposit.
+All unit tests ran. Generic fault-injection log entries are expected and their
+balance/ledger rollback assertions passed.
+
+Acceptance criteria, exact reproduction instructions and captured outputs are in
+the [SCRUM-36 Jira evidence](scrum-36-jira-evidence.md) and
+[execution record](evidence/scrum-36/README.md). The existing SQL migration edit
+was left untouched and excluded from this issue's commits.
+
+## Initial executed checks — historical baseline, 26 October 2026
 
 Verified on Windows ARM64 with Node 24.13.0, npm 11.21.1, G++ 14.2.0, portable PostgreSQL 18.4 x64 under Windows emulation, and Playwright Chromium 156.
 
