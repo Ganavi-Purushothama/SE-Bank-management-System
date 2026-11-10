@@ -53,3 +53,112 @@ has no binary: always build on the target OS. Do not copy another OS's binary.
 
 Choose one database setup route below; do not combine the helper's generated
 database credentials with an independently installed database.
+
+## Route A: project-owned local PostgreSQL (development)
+
+From the repository root after installing dependencies, point the helper at
+PostgreSQL's binary directory if it is not found automatically:
+
+```powershell
+# Replace this example with the installed PostgreSQL version/path on your machine.
+$env:POSTGRES_BIN = 'C:\Program Files\PostgreSQL\18\bin'
+npm run local
+```
+
+```bash
+# Git Bash example for the same optional setting:
+export POSTGRES_BIN='C:/Program Files/PostgreSQL/18/bin'
+npm run local
+```
+
+On Windows the helper also searches installed versions under Program Files and
+`build/postgres-portable/package/native/bin`. On Linux/macOS set POSTGRES_BIN
+explicitly to a directory containing `initdb`, `pg_ctl` and `postgres` if needed.
+The portable download workaround for Windows ARM is in [testing.md](testing.md).
+
+The helper initializes `data/local-postgres/cluster` on loopback port **55432**,
+creates a restricted `bank_app` role and `team6_bank` database, migrates,
+provisions a development admin, builds C++ and starts the application. It does
+not install or change a system service. Port 55432 must be available for a new
+cluster; PORT changes the HTTP port only.
+
+Open **http://localhost:3000** by default. Read your generated administrator
+login/password privately from `data/local-login.txt`. The helper uses an existing
+valid ADMIN_PASSWORD on first setup or generates one, then removes it from the
+active `.env`. It backs up an existing `.env` once to `.env.before-local` before
+writing the project database settings. Do not share these files or commit them.
+
+Keep the terminal open. Ctrl+C stops the app and the database started by this
+invocation; a database already running before invocation is left running.
+Restart with `npm run local`; the saved cluster and customer data are reused.
+Keep `data/local-postgres/credentials.json` with its cluster. If credentials are
+missing, restore them from your private backup; the helper does not reset data.
+
+## Route B: an existing PostgreSQL installation
+
+Start your PostgreSQL service using its normal OS tools. Connect as a database
+administrator (replace the username/port if different):
+
+```bash
+psql -h localhost -p 5432 -U postgres -d postgres
+```
+
+Inside psql run the following SQL and password meta-command. Choose a unique
+database-role password when prompted; do not paste it into shared logs.
+
+```sql
+CREATE ROLE bank_user LOGIN;
+\password bank_user
+CREATE DATABASE team6_bank OWNER bank_user;
+\q
+```
+
+These commands are for a new role/database. If they already exist, verify their
+ownership and credentials; do not drop or overwrite them. The application role
+owns its dedicated database and needs schema/table creation for migrations; it
+does not need PostgreSQL superuser privileges. For server-specific public-schema
+permission errors, ask the DB administrator to grant that role CREATE/USAGE on
+the dedicated database's public schema rather than making the role a superuser.
+
+From the repository root copy the example **only if `.env` does not exist**:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Git Bash/Linux/macOS equivalent: `cp .env.example .env`.
+Edit `.env` in your editor:
+
+| Setting | Value to supply |
+|---|---|
+| DATABASE_URL | `postgresql://bank_user:YOUR_URL_ENCODED_PASSWORD@localhost:5432/team6_bank` |
+| HOST / PORT | `127.0.0.1` / `3000` for local use |
+| APP_ORIGIN | `http://localhost:3000` exactly, without a trailing slash |
+| NODE_ENV | `development` for local HTTP |
+| ADMIN_LOGIN | Your chosen login, 1–32 letters/digits/hyphens |
+| ADMIN_PASSWORD | Your unique admin password, at least 12 characters and at most 128 UTF-8 bytes; replace the example placeholder |
+
+The PostgreSQL-role password and banking-admin password are separate credentials.
+URL-encode reserved characters in the DATABASE_URL password (for example `@` as
+`%40` and `#` as `%23`). Quote environment values containing `#` so it is not
+treated as a comment. Keep the default balance/session settings initially.
+Exported shell variables take precedence over `.env`; clear stale values in the
+current terminal if the app connects to an unexpected database or origin.
+
+```powershell
+npm run migrate
+npm run admin
+# Remove ADMIN_PASSWORD from .env after successful provisioning.
+npm start
+```
+
+Migrations can be rerun. Run `npm run admin` once per new login; it does not reset
+an existing administrator's password, and a duplicate login is an error. There
+is no seeded production admin. `npm start` loads `.env` and serves the app; open
+the exact APP_ORIGIN. Ctrl+C stops the application, leaving your independently
+managed PostgreSQL service running. Restart with `npm start`; account data stays
+in the configured database. Do not rerun clone/provisioning on each restart.
+
+Changing the HTTP port requires matching PORT and APP_ORIGIN, for example `3001`
+and `http://localhost:3001`. Always use the same hostname when signing in and
+submitting forms; localhost and 127.0.0.1 are different origins.
