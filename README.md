@@ -4,6 +4,8 @@ Functional Team 6 academic banking application: HTML/CSS/JavaScript frontend, No
 
 Original submitted [SRS](SRS.md), [SAD](SAD_Bank_Management_System.md), [STP](STP.md), PDFs and UML diagrams remain preserved. The previous README is archived in [docs/original-readme.md](docs/original-readme.md). See [audit and architecture decisions](docs/audit-and-decisions.md) for document conflicts and implementation policies.
 
+**Sprint 1 evaluation:** [Open the four-member handoff, readiness checklist and one-minute demo](docs/evaluation/README.md). The kit maps responsibilities to the actual backlog, explains all modules, and distinguishes recorded evidence from peer reviews/acceptance still requiring team action.
+
 ## Requirements
 
 - Node.js **22.12 or newer** and npm (latest local verification: Node 24.22.1 / npm 11.19.1).
@@ -13,7 +15,7 @@ Original submitted [SRS](SRS.md), [SAD](SAD_Bank_Management_System.md), [STP](ST
 
 ## Run locally
 
-Follow the complete [installation and execution guide](docs/setup-and-execution.md) for prerequisites, PowerShell/Git Bash commands, both database setup routes, restart instructions and a demonstration checklist. While SCRUM-39 is under review, use `codex/scrum-39-installation-execution` after it is published; use `main` once the work is merged. The original project artifacts remain preserved.
+The implemented application is on `main`, merged through [PR #13](https://github.com/Ganavi-Purushothama/SE-Bank-management-System/pull/13). Follow the complete [installation and execution guide](docs/setup-and-execution.md) for prerequisites, PowerShell/Git Bash commands, both database setup routes, restart instructions and a demonstration checklist. To review the SCRUM-39 documentation before it is merged, use `codex/scrum-39-installation-execution`; afterward, use `main`. The original project artifacts remain preserved.
 
 ### Easiest local startup
 

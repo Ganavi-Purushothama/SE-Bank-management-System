@@ -134,7 +134,7 @@ See [actual outputs and limits](evidence/scrum-39/README.md) and
 
 ## Running the normal application
 
-Use the published `codex/scrum-39-installation-execution` review branch while this work is under review, or main after it is merged. The [setup guide](setup-and-execution.md) contains the current full instructions.
+The application is available on `main` following the merge of PR #13. The [setup guide](setup-and-execution.md) contains the full installation and execution instructions. To review the SCRUM-39 documentation before it is merged, use `codex/scrum-39-installation-execution`; afterward, use `main`. The Sprint 1 evaluation kit links the actual GitHub evidence and current preparation gaps separately.
 
 1. Install Node/G++/PostgreSQL and run `npm ci`, then `npm run build`.
 2. Create a dedicated PostgreSQL role/database as described in README.

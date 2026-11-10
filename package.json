@@ -8,6 +8,7 @@
   },
   "scripts": {
     "local": "node scripts/local.mjs",
+    "demo:record": "node scripts/record-sprint-demo.mjs",
     "build": "node scripts/build.mjs",
     "start": "node --env-file-if-exists=.env server/index.js",
     "migrate": "node --env-file-if-exists=.env scripts/migrate.mjs",
