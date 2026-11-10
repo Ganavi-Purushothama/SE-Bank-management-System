@@ -16,7 +16,8 @@ commands rebuilt the actual C++ executable with C++17 and warnings as errors.
 | `npm run format:check` | 0 | Passed | [format-check.txt](format-check.txt) |
 | `git diff --check` | 0 | Passed | No output on success |
 
-These are captured command outputs, not illustrative examples. Timings and
+These are captured command outputs, not illustrative examples. Trailing blank
+lines in the lint output were trimmed for Git whitespace checks. Timings and
 generated request IDs vary on rerun. `request_failed` entries with `P0001` and
 `INTERNAL` are expected in intentional rollback/engine-failure tests; their
 assertions passed.
