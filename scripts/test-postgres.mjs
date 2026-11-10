@@ -130,6 +130,7 @@ try {
       "--test",
       "--test-concurrency=1",
       "tests/api.test.js",
+      "tests/security.test.js",
       "tests/postgres.test.js",
       "tests/startup.test.js",
       "tests/statements.test.js",
