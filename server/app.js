@@ -8,6 +8,7 @@ import { auth } from "./auth.js";
 import { banking, accountColumns, present, audit } from "./banking.js";
 import { assert } from "./errors.js";
 import { uuid, fields, page, text } from "./validation.js";
+import { accountStatement } from "./statements.js";
 export async function createApp(db, config, engine) {
   const app = express();
   const authentication = await auth(db, config);
@@ -222,6 +223,19 @@ export async function createApp(db, config, engine) {
         order,
         summary,
       },
+    });
+  });
+  app.get("/api/accounts/:id/statement", async (req, res) => {
+    fields(req.query, ["from", "to"]);
+    res.json({
+      status: "OK",
+      data: await accountStatement(
+        db,
+        bank,
+        req.params.id,
+        req.user,
+        req.query,
+      ),
     });
   });
   app.use("/api/admin", authentication.admin);

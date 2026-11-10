@@ -10,6 +10,7 @@ All POST/PATCH calls require `Content-Type: application/json` and an `Origin` ex
 | GET `/api/config` | Public | none | `200 data: {minInitial,minBalance,currency}` |
 | POST `/api/login` | Public, rate-limited | `{accountNumber,password}`; accountNumber may be admin login | `200 data: {role,csrfToken}` and new session cookie |
 | GET `/api/me` | Signed in | none | `200 data: {role,csrfToken,accounts:[]}`; admin has no personal account |
+| GET `/api/accounts/:id/statement` | Owner or admin | required `from`, `to` (inclusive UTC dates) | `200 data:` complete statement snapshot; see below |
 | POST `/api/logout` | Signed in + CSRF | `{}` | `200`; database session revoked and cookie cleared |
 | GET `/api/accounts/:id` | Owner or admin | UUID | `200 data:` account details and balance |
 | PATCH `/api/accounts/:id` | Owner or admin + CSRF | `{name,phone,address}` | `200 data:` updated account; ACTIVE accounts only |
@@ -29,6 +30,40 @@ Account data: `id,number,name,phone,address,type,balance,status,created_at,close
 `400`: malformed body/JSON, unexpected fields, invalid identifiers, amounts, page/date/type, missing idempotency key, confirmation mismatch, database check constraint (`23514`) or foreign key (`23503`) violation. `401`: invalid login, locked/closed login (same generic error), missing/expired/revoked session. `403`: disallowed origin, missing/incorrect CSRF token, incorrect role. `404`: nonexistent or non-owned account, unknown endpoint. `409`: closed state or reused idempotency key with a different amount/operation; unique identifier conflict (`23505`). `413`: body above 8 KB. `415`: wrong content type. `422`: C++ rejects initial minimum, insufficient funds, retained minimum, or maximum balance. `429`: more than 30 login requests per IP in 15 minutes. `500`: database/internal error (generic message). `503`: missing, timed out, or malformed-response C++ engine, or database connectivity failure on health check. A database commit error never produces an APPROVED response.
 
 Names: trimmed, nonempty, maximum 100 characters. Phone: optional, up to 30 characters; when present, 7–15 digits with only digits, spaces, hyphens, brackets and an optional leading `+`; address: up to 300. No control characters. Password: minimum 12 characters, maximum 128 UTF-8 bytes. Admin login: 1–32 alphanumeric/hyphen characters. Customer account numbers are generated server-side and constrained unique. Amount strings: positive, no sign/exponent/leading zeroes except `0.xx`, maximum two decimals and 9,000,000,000,000 paise. UUID and page parameters are validated. Transaction filters use inclusive `from` and `to` YYYY-MM-DD **UTC** dates, newest first, 20 per page. `type` is one of the four ledger types. Search treats `%` and `_` as literal characters and uses parameterized queries.
+
+## Account statement contract (SCRUM-29)
+
+`GET /api/accounts/:id/statement?from=2026-11-01&to=2026-11-30`
+requires a signed-in owner or administrator. Existing closed-account access rules
+apply: customers lose access after closure, while administrators can review the
+retained ledger. Unknown and other customers' accounts return `404`.
+
+Both parameters must be single, real `YYYY-MM-DD` dates in years 0001–9999,
+with `from <= to`. Missing, repeated, malformed, reversed or extra parameters
+return `400`. Boundaries are `[from 00:00:00 UTC, day after to 00:00:00 UTC)`
+regardless of the database session or browser timezone.
+
+The response `data` contains `account: {id,number,name,type}`,
+`period: {from,to,timezone:"UTC"}`, `currency:"INR"`, `generatedAt`,
+`openingBalance`, `totalCredits`, `totalDebits`, `closingBalance`,
+`transactionCount`, and `items`. Monetary values are integer paise; item fields
+match transaction history. Items are ordered by `created_at ASC, id ASC`, with
+the ID providing deterministic ordering for equal timestamps. All matching
+transactions are included, independently of history pagination or type filters.
+
+Opening balance is the net committed ledger activity before the start date.
+OPENING and DEPOSIT are credits; WITHDRAW and SETTLEMENT are debits. Closing
+balance equals opening balance + credits − debits. An empty period returns no
+items, zero totals, and equal opening/closing balances. Account metadata, totals
+and rows are read in one read-only REPEATABLE READ transaction; later commits
+appear on the next generation. The response uses `Cache-Control: no-store`.
+
+More than 10,000 matching rows, or totals outside the safe integer range, return
+`422` with a request to shorten the period. The API never returns a partial
+statement. HTML rendering, browser printing/PDF saving and UTF-8 CSV download
+use this same response in the customer interface. CSV uses CRLF, quoted fields,
+a UTF-8 BOM and exact two-decimal INR values; spreadsheet formula prefixes in
+customer text are escaped with an apostrophe.
 
 ## Financial retries
 

@@ -129,6 +129,9 @@ h3 {
   grid-template-columns: 236px 1fr;
   min-height: 100vh;
 }
+.layout > div {
+  min-width: 0;
+}
 aside {
   background: #153d32;
   color: #e8efe5;
@@ -333,6 +336,84 @@ td button {
 }
 .positive {
   color: #31804a;
+}
+.statement-totals {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+}
+.statement-table caption {
+  text-align: left;
+  padding: 12px 0;
+  color: var(--muted);
+}
+.statement-table td:nth-child(3),
+.statement-table td:nth-child(4) {
+  text-align: right;
+}
+.statement-reference {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.statement-actions {
+  flex-wrap: wrap;
+}
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+  body:has(.account-statement) {
+    background: white;
+    color: black;
+  }
+  body:has(.account-statement)
+    :is(
+      aside,
+      header,
+      .heading,
+      .statement-controls,
+      .statement-actions,
+      #notice,
+      .skip
+    ) {
+    display: none !important;
+  }
+  body:has(.account-statement) :is(.layout, .content) {
+    display: block;
+    min-height: 0;
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .account-statement {
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    font-size: 10pt;
+  }
+  .account-statement .table-wrap {
+    overflow: visible;
+  }
+  .statement-table {
+    table-layout: fixed;
+    width: 100%;
+    font-size: 8pt;
+  }
+  .statement-table :is(th, td) {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    padding: 7px 4px;
+  }
+  .statement-table thead {
+    display: table-header-group;
+  }
+  .statement-table tr,
+  .account-statement .details {
+    break-inside: avoid;
+  }
 }
 .negative {
   color: #9a4e38;

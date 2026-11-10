@@ -42,6 +42,30 @@ The main E2E scenario logs in as the customer, verifies ₹1,000, deposits ₹25
 
 The API suite installs a temporary PL/pgSQL trigger in an isolated schema which throws before a ledger insert. It then verifies HTTP failure, unchanged balance and unchanged ledger count. A separate injected engine failure verifies no financial mutation. These are intentional failures; generic structured `request_failed` server log entries are expected while these tests pass. Concurrent PGlite tests establish orchestration behavior only because its single connection is serialized; the PostgreSQL suite is the authority for multiconnection locking.
 
+## Statement verification (SCRUM-29)
+
+`npm test` includes statement calendar validation, CSV escaping and exact monetary
+formatting, and statement API integration checks. API checks cover authorization,
+UTC start/end boundaries, single-day and empty periods, reconciliation, opening
+deposits, settlement, more than 20 transactions, the 10,000-row limit, and unsafe
+aggregate rejection. `npm run test:postgres` repeats statement integration checks
+against a disposable real PostgreSQL database and verifies that a deposit
+committed between statement reads appears only in the next snapshot.
+
+`npm run test:e2e` includes the customer statement flow, reversed-date error,
+empty-period message, actual CSV download contents, print button wiring, print
+media visibility, PDF generation, and mobile horizontal-overflow checks. The
+statement scenario writes `test-results/statement-print.png`,
+`test-results/statement-mobile.png` and `test-results/statement.pdf` for layout
+inspection. The native print destination dialog is selected manually by users.
+
+Manual acceptance: sign in as a customer, generate a period containing deposits
+and withdrawals, and check opening + credits − debits = closing. Compare every
+CSV record and total with the displayed statement, then print or save as PDF.
+Choose a day with no activity to verify balance carry-forward. Edit either date
+and confirm the previous statement and export controls disappear until a new
+statement is generated.
+
 ## Manual demonstration with the normal application
 
 1. Follow README, provision your own admin, start PostgreSQL and `npm start`.

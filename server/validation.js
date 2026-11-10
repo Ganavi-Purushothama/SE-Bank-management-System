@@ -69,6 +69,25 @@ export function page(value = "1") {
   );
   return Number(value);
 }
+// Statements require both inclusive calendar dates. Ledger boundaries use UTC.
+export function statementPeriod(from, to) {
+  for (const [label, value] of [
+    ["Start", from],
+    ["End", to],
+  ]) {
+    assert(
+      typeof value === "string" &&
+        /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(value) &&
+        value >= "0001-01-01" &&
+        Number.isFinite(Date.parse(value)) &&
+        new Date(value).toISOString().slice(0, 10) === value,
+      400,
+      `${label} date must be a valid YYYY-MM-DD date`,
+    );
+  }
+  assert(from <= to, 400, "Start date must be on or before end date");
+  return { from, to, timezone: "UTC" };
+}
 // Issue #8: optional phone number; digits with an optional leading +, spaces, hyphens and brackets.
 export function phone(value) {
   const result = text(value ?? "", "Phone", 30, false);
