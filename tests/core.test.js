@@ -126,3 +126,42 @@ test("issue #5: C++ rule engine enforces boundary conditions and available funds
   // Full settlement of nonzero balance must leave exactly 0
   assert.equal(await evaluate("SETTLEMENT", 75000, 75000, 0), 0);
 });
+
+test("SCRUM-36: opening and deposit accept exact limits and reject one paise beyond", async () => {
+  const maximum = 9000000000000;
+  assert.equal(await evaluate("OPENING", 0, 50000, 50000), 50000);
+  await assert.rejects(evaluate("OPENING", 0, 49999, 50000), { status: 422 });
+  assert.equal(await evaluate("OPENING", 0, maximum, maximum), maximum);
+  assert.equal(await evaluate("DEPOSIT", maximum - 1, 1, 0), maximum);
+  await assert.rejects(evaluate("DEPOSIT", maximum, 1, 0), { status: 422 });
+});
+
+test("SCRUM-36: financial rules reject invalid balances, amounts and minimums", async () => {
+  for (const operation of ["OPENING", "DEPOSIT", "WITHDRAW", "SETTLEMENT"]) {
+    for (const [balance, amount, minimum] of [
+      [-1, 1, 0],
+      [9000000000001, 1, 0],
+      [100, 0, 0],
+      [100, -1, 0],
+      [100, 9000000000001, 0],
+      [100, 1, -1],
+      [100, 1, 9000000000001],
+    ]) {
+      await assert.rejects(evaluate(operation, balance, amount, minimum), {
+        status: 422,
+      });
+    }
+  }
+});
+
+test("SCRUM-36: withdrawals preserve exact paise across a deposit and full settlement", async () => {
+  const opening = await evaluate("OPENING", 0, 100000, 50000);
+  const deposited = await evaluate("DEPOSIT", opening, 25055, 0);
+  assert.equal(deposited, 125055);
+  const withdrawn = await evaluate("WITHDRAW", deposited, 5055, 0);
+  assert.equal(withdrawn, 120000);
+  await assert.rejects(evaluate("WITHDRAW", withdrawn, 120001, 0), {
+    status: 422,
+  });
+  assert.equal(await evaluate("SETTLEMENT", withdrawn, withdrawn, 0), 0);
+});

@@ -1,0 +1,17 @@
+
+> team6-bank-management@1.0.0 test:e2e
+> playwright test
+
+[WebServer] (node:4584) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:40216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\browser\statements.spec.js:4:1 › customer generates a statement and validates the selected period (3.2s)
+  ok 2 [chromium] › tests\browser\workflow.spec.js:10:1 › customer banking and administrator lifecycle through the real UI (3.1s)
+  ok 3 [chromium] › tests\browser\workflow.spec.js:139:1 › authentication errors, masked password and browser form validation (335ms)
+  ok 4 [chromium] › tests\browser\workflow.spec.js:155:1 › loading and API failure states are actionable and mobile layout does not overflow (763ms)
+
+  4 passed (10.0s)

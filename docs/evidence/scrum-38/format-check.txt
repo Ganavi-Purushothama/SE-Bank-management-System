@@ -1,0 +1,6 @@
+
+> team6-bank-management@1.0.0 format:check
+> prettier --check server public scripts tests package.json playwright.config.js eslint.config.js
+
+Checking formatting...
+All matched files use Prettier code style!
