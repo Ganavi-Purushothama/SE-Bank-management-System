@@ -1,0 +1,1838 @@
+{
+  "source_revision": "729f5c35e3aba21da91585636fd6fea87bcc6e43",
+  "gcov_version": "16.2.0",
+  "files": [
+    {
+      "file": "core/main.cpp",
+      "functions": [
+        {
+          "name": "main",
+          "demangled_name": "main",
+          "start_line": 4,
+          "start_column": 5,
+          "end_line": 25,
+          "end_column": 1,
+          "blocks": 92,
+          "blocks_executed": 79,
+          "execution_count": 185,
+          "total_prime_paths": 0,
+          "covered_prime_paths": 0,
+          "prime_path_coverage": []
+        }
+      ],
+      "lines": [
+        {
+          "line_number": 4,
+          "function_name": "main",
+          "count": 185,
+          "unexecuted_block": false,
+          "block_ids": [],
+          "branches": [],
+          "calls": [],
+          "conditions": []
+        },
+        {
+          "line_number": 5,
+          "function_name": "main",
+          "count": 185,
+          "unexecuted_block": false,
+          "block_ids": [
+            2
+          ],
+          "branches": [],
+          "calls": [
+            {
+              "source_block_id": 2,
+              "destination_block_id": 1,
+              "returned": 185
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 7,
+          "function_name": "main",
+          "count": 15122,
+          "unexecuted_block": false,
+          "block_ids": [
+            3,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "branches": [
+            {
+              "count": 15122,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 9,
+              "destination_block_id": 10
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 9,
+              "destination_block_id": 91
+            },
+            {
+              "count": 15122,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 10,
+              "destination_block_id": 11
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 10,
+              "destination_block_id": 91
+            },
+            {
+              "count": 15122,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 11,
+              "destination_block_id": 12
+            },
+            {
+              "count": 0,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 11,
+              "destination_block_id": 14
+            },
+            {
+              "count": 14939,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 12,
+              "destination_block_id": 13
+            },
+            {
+              "count": 183,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 12,
+              "destination_block_id": 14
+            },
+            {
+              "count": 14939,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 15,
+              "destination_block_id": 4
+            },
+            {
+              "count": 183,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 15,
+              "destination_block_id": 16
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 9,
+              "destination_block_id": 1,
+              "returned": 15122
+            },
+            {
+              "source_block_id": 10,
+              "destination_block_id": 1,
+              "returned": 15122
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 8,
+          "function_name": "main",
+          "count": 14939,
+          "unexecuted_block": false,
+          "block_ids": [
+            4,
+            5,
+            6,
+            7
+          ],
+          "branches": [
+            {
+              "count": 2,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 5,
+              "destination_block_id": 6
+            },
+            {
+              "count": 14937,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 5,
+              "destination_block_id": 8
+            },
+            {
+              "count": 2,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 6,
+              "destination_block_id": 7
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 6,
+              "destination_block_id": 91
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 4,
+              "destination_block_id": 1,
+              "returned": 14939
+            },
+            {
+              "source_block_id": 6,
+              "destination_block_id": 1,
+              "returned": 2
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 9,
+          "function_name": "main",
+          "count": 14937,
+          "unexecuted_block": false,
+          "block_ids": [
+            8
+          ],
+          "branches": [
+            {
+              "count": 14937,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 8,
+              "destination_block_id": 9
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 8,
+              "destination_block_id": 91
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 8,
+              "destination_block_id": 1,
+              "returned": 14937
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 12,
+          "function_name": "main",
+          "count": 183,
+          "unexecuted_block": false,
+          "block_ids": [
+            16
+          ],
+          "branches": [
+            {
+              "count": 183,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 16,
+              "destination_block_id": 17
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 16,
+              "destination_block_id": 91
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 16,
+              "destination_block_id": 1,
+              "returned": 183
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 13,
+          "function_name": "main",
+          "count": 183,
+          "unexecuted_block": false,
+          "block_ids": [
+            17
+          ],
+          "branches": [],
+          "calls": [
+            {
+              "source_block_id": 17,
+              "destination_block_id": 1,
+              "returned": 183
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 15,
+          "function_name": "main",
+          "count": 183,
+          "unexecuted_block": false,
+          "block_ids": [
+            18,
+            19,
+            20,
+            21,
+            22,
+            51
+          ],
+          "branches": [
+            {
+              "count": 183,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 18,
+              "destination_block_id": 19
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 18,
+              "destination_block_id": 65
+            },
+            {
+              "count": 28,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 19,
+              "destination_block_id": 20
+            },
+            {
+              "count": 155,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 19,
+              "destination_block_id": 23
+            },
+            {
+              "count": 28,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 21,
+              "destination_block_id": 22
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 21,
+              "destination_block_id": 51
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 18,
+              "destination_block_id": 1,
+              "returned": 183
+            },
+            {
+              "source_block_id": 20,
+              "destination_block_id": 1,
+              "returned": 28
+            },
+            {
+              "source_block_id": 21,
+              "destination_block_id": 1,
+              "returned": 28
+            },
+            {
+              "source_block_id": 22,
+              "destination_block_id": 1,
+              "returned": 28
+            },
+            {
+              "source_block_id": 51,
+              "destination_block_id": 1,
+              "returned": 0
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 16,
+          "function_name": "main",
+          "count": 435,
+          "unexecuted_block": false,
+          "block_ids": [
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            53,
+            55,
+            56,
+            58,
+            59,
+            61,
+            62,
+            64
+          ],
+          "branches": [
+            {
+              "count": 155,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 23,
+              "destination_block_id": 24
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 23,
+              "destination_block_id": 64
+            },
+            {
+              "count": 155,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 24,
+              "destination_block_id": 25
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 24,
+              "destination_block_id": 64
+            },
+            {
+              "count": 155,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 25,
+              "destination_block_id": 26
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 25,
+              "destination_block_id": 62
+            },
+            {
+              "count": 155,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 26,
+              "destination_block_id": 27
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 26,
+              "destination_block_id": 61
+            },
+            {
+              "count": 155,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 27,
+              "destination_block_id": 28
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 27,
+              "destination_block_id": 61
+            },
+            {
+              "count": 153,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 28,
+              "destination_block_id": 29
+            },
+            {
+              "count": 2,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 28,
+              "destination_block_id": 59
+            },
+            {
+              "count": 153,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 29,
+              "destination_block_id": 30
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 29,
+              "destination_block_id": 58
+            },
+            {
+              "count": 153,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 30,
+              "destination_block_id": 31
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 30,
+              "destination_block_id": 58
+            },
+            {
+              "count": 153,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 31,
+              "destination_block_id": 32
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 31,
+              "destination_block_id": 56
+            },
+            {
+              "count": 153,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 32,
+              "destination_block_id": 33
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 32,
+              "destination_block_id": 55
+            },
+            {
+              "count": 153,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 33,
+              "destination_block_id": 34
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 33,
+              "destination_block_id": 55
+            },
+            {
+              "count": 84,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 34,
+              "destination_block_id": 35
+            },
+            {
+              "count": 69,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 34,
+              "destination_block_id": 53
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 23,
+              "destination_block_id": 1,
+              "returned": 155
+            },
+            {
+              "source_block_id": 24,
+              "destination_block_id": 1,
+              "returned": 155
+            },
+            {
+              "source_block_id": 25,
+              "destination_block_id": 1,
+              "returned": 155
+            },
+            {
+              "source_block_id": 26,
+              "destination_block_id": 1,
+              "returned": 155
+            },
+            {
+              "source_block_id": 27,
+              "destination_block_id": 1,
+              "returned": 155
+            },
+            {
+              "source_block_id": 28,
+              "destination_block_id": 1,
+              "returned": 155
+            },
+            {
+              "source_block_id": 29,
+              "destination_block_id": 1,
+              "returned": 153
+            },
+            {
+              "source_block_id": 30,
+              "destination_block_id": 1,
+              "returned": 153
+            },
+            {
+              "source_block_id": 31,
+              "destination_block_id": 1,
+              "returned": 153
+            },
+            {
+              "source_block_id": 32,
+              "destination_block_id": 1,
+              "returned": 153
+            },
+            {
+              "source_block_id": 33,
+              "destination_block_id": 1,
+              "returned": 153
+            },
+            {
+              "source_block_id": 34,
+              "destination_block_id": 1,
+              "returned": 153
+            },
+            {
+              "source_block_id": 35,
+              "destination_block_id": 1,
+              "returned": 84
+            },
+            {
+              "source_block_id": 36,
+              "destination_block_id": 1,
+              "returned": 84
+            },
+            {
+              "source_block_id": 37,
+              "destination_block_id": 1,
+              "returned": 84
+            },
+            {
+              "source_block_id": 38,
+              "destination_block_id": 1,
+              "returned": 84
+            },
+            {
+              "source_block_id": 53,
+              "destination_block_id": 1,
+              "returned": 69
+            },
+            {
+              "source_block_id": 56,
+              "destination_block_id": 1,
+              "returned": 69
+            },
+            {
+              "source_block_id": 59,
+              "destination_block_id": 1,
+              "returned": 71
+            },
+            {
+              "source_block_id": 62,
+              "destination_block_id": 1,
+              "returned": 71
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 17,
+          "function_name": "main",
+          "count": 84,
+          "unexecuted_block": false,
+          "block_ids": [
+            39,
+            40,
+            41
+          ],
+          "branches": [
+            {
+              "count": 84,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 39,
+              "destination_block_id": 40
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 39,
+              "destination_block_id": 65
+            },
+            {
+              "count": 84,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 40,
+              "destination_block_id": 41
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 40,
+              "destination_block_id": 65
+            },
+            {
+              "count": 84,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 41,
+              "destination_block_id": 42
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 41,
+              "destination_block_id": 65
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 39,
+              "destination_block_id": 1,
+              "returned": 84
+            },
+            {
+              "source_block_id": 40,
+              "destination_block_id": 1,
+              "returned": 84
+            },
+            {
+              "source_block_id": 41,
+              "destination_block_id": 1,
+              "returned": 84
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 18,
+          "function_name": "main",
+          "count": 99,
+          "unexecuted_block": false,
+          "block_ids": [
+            65,
+            67
+          ],
+          "branches": [
+            {
+              "count": 0,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 65,
+              "destination_block_id": 66
+            },
+            {
+              "count": 2,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 65,
+              "destination_block_id": 67
+            },
+            {
+              "count": 97,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 65,
+              "destination_block_id": 72
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 67,
+              "destination_block_id": 1,
+              "returned": 2
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 19,
+          "function_name": "main",
+          "count": 2,
+          "unexecuted_block": false,
+          "block_ids": [
+            68,
+            69
+          ],
+          "branches": [
+            {
+              "count": 2,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 68,
+              "destination_block_id": 69
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 68,
+              "destination_block_id": 83
+            },
+            {
+              "count": 2,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 69,
+              "destination_block_id": 70
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 69,
+              "destination_block_id": 83
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 68,
+              "destination_block_id": 1,
+              "returned": 2
+            },
+            {
+              "source_block_id": 69,
+              "destination_block_id": 1,
+              "returned": 2
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 20,
+          "function_name": "main",
+          "count": 2,
+          "unexecuted_block": false,
+          "block_ids": [
+            70
+          ],
+          "branches": [
+            {
+              "count": 2,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 70,
+              "destination_block_id": 71
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 70,
+              "destination_block_id": 83
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 70,
+              "destination_block_id": 1,
+              "returned": 2
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 21,
+          "function_name": "main",
+          "count": 99,
+          "unexecuted_block": false,
+          "block_ids": [
+            71,
+            72,
+            83
+          ],
+          "branches": [],
+          "calls": [
+            {
+              "source_block_id": 71,
+              "destination_block_id": 1,
+              "returned": 2
+            },
+            {
+              "source_block_id": 72,
+              "destination_block_id": 1,
+              "returned": 97
+            },
+            {
+              "source_block_id": 83,
+              "destination_block_id": 1,
+              "returned": 0
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 22,
+          "function_name": "main",
+          "count": 97,
+          "unexecuted_block": false,
+          "block_ids": [
+            73,
+            74,
+            75,
+            76,
+            77
+          ],
+          "branches": [
+            {
+              "count": 97,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 73,
+              "destination_block_id": 74
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 73,
+              "destination_block_id": 85
+            },
+            {
+              "count": 97,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 75,
+              "destination_block_id": 76
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 75,
+              "destination_block_id": 85
+            },
+            {
+              "count": 97,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 76,
+              "destination_block_id": 77
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 76,
+              "destination_block_id": 85
+            },
+            {
+              "count": 97,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 77,
+              "destination_block_id": 78
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 77,
+              "destination_block_id": 85
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 73,
+              "destination_block_id": 1,
+              "returned": 97
+            },
+            {
+              "source_block_id": 74,
+              "destination_block_id": 1,
+              "returned": 97
+            },
+            {
+              "source_block_id": 75,
+              "destination_block_id": 1,
+              "returned": 97
+            },
+            {
+              "source_block_id": 76,
+              "destination_block_id": 1,
+              "returned": 97
+            },
+            {
+              "source_block_id": 77,
+              "destination_block_id": 1,
+              "returned": 97
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 23,
+          "function_name": "main",
+          "count": 97,
+          "unexecuted_block": false,
+          "block_ids": [
+            78,
+            79,
+            80,
+            81
+          ],
+          "branches": [
+            {
+              "count": 97,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 78,
+              "destination_block_id": 79
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 78,
+              "destination_block_id": 85
+            },
+            {
+              "count": 97,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 80,
+              "destination_block_id": 81
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 80,
+              "destination_block_id": 85
+            },
+            {
+              "count": 97,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 81,
+              "destination_block_id": 82
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 81,
+              "destination_block_id": 85
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 78,
+              "destination_block_id": 1,
+              "returned": 97
+            },
+            {
+              "source_block_id": 79,
+              "destination_block_id": 1,
+              "returned": 97
+            },
+            {
+              "source_block_id": 80,
+              "destination_block_id": 1,
+              "returned": 97
+            },
+            {
+              "source_block_id": 81,
+              "destination_block_id": 1,
+              "returned": 97
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 24,
+          "function_name": "main",
+          "count": 97,
+          "unexecuted_block": false,
+          "block_ids": [
+            82,
+            85
+          ],
+          "branches": [],
+          "calls": [
+            {
+              "source_block_id": 82,
+              "destination_block_id": 1,
+              "returned": 97
+            },
+            {
+              "source_block_id": 85,
+              "destination_block_id": 1,
+              "returned": 0
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 25,
+          "function_name": "main",
+          "count": 368,
+          "unexecuted_block": false,
+          "block_ids": [
+            42,
+            43,
+            44,
+            45,
+            46,
+            48,
+            87,
+            89,
+            91
+          ],
+          "branches": [
+            {
+              "count": 183,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 46,
+              "destination_block_id": 47
+            },
+            {
+              "count": 2,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 46,
+              "destination_block_id": 49
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 42,
+              "destination_block_id": 1,
+              "returned": 183
+            },
+            {
+              "source_block_id": 43,
+              "destination_block_id": 1,
+              "returned": 183
+            },
+            {
+              "source_block_id": 45,
+              "destination_block_id": 1,
+              "returned": 185
+            },
+            {
+              "source_block_id": 87,
+              "destination_block_id": 1,
+              "returned": 0
+            },
+            {
+              "source_block_id": 89,
+              "destination_block_id": 1,
+              "returned": 0
+            },
+            {
+              "source_block_id": 91,
+              "destination_block_id": 1,
+              "returned": 0
+            }
+          ],
+          "conditions": []
+        }
+      ]
+    },
+    {
+      "file": "core/banking.hpp",
+      "functions": [
+        {
+          "name": "_ZN4bank8evaluateERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExxx",
+          "demangled_name": "bank::evaluate(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long long, long long, long long)",
+          "start_line": 7,
+          "start_column": 21,
+          "end_line": 21,
+          "end_column": 1,
+          "blocks": 57,
+          "blocks_executed": 48,
+          "execution_count": 153,
+          "total_prime_paths": 0,
+          "covered_prime_paths": 0,
+          "prime_path_coverage": []
+        }
+      ],
+      "lines": [
+        {
+          "line_number": 7,
+          "function_name": "_ZN4bank8evaluateERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExxx",
+          "count": 153,
+          "unexecuted_block": false,
+          "block_ids": [],
+          "branches": [],
+          "calls": [],
+          "conditions": []
+        },
+        {
+          "line_number": 9,
+          "function_name": "_ZN4bank8evaluateERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExxx",
+          "count": 153,
+          "unexecuted_block": false,
+          "block_ids": [
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "branches": [
+            {
+              "count": 153,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 2,
+              "destination_block_id": 3
+            },
+            {
+              "count": 0,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 2,
+              "destination_block_id": 8
+            },
+            {
+              "count": 145,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 3,
+              "destination_block_id": 4
+            },
+            {
+              "count": 8,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 3,
+              "destination_block_id": 8
+            },
+            {
+              "count": 145,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 4,
+              "destination_block_id": 5
+            },
+            {
+              "count": 0,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 4,
+              "destination_block_id": 8
+            },
+            {
+              "count": 137,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 5,
+              "destination_block_id": 6
+            },
+            {
+              "count": 8,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 5,
+              "destination_block_id": 8
+            },
+            {
+              "count": 127,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 6,
+              "destination_block_id": 7
+            },
+            {
+              "count": 10,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 6,
+              "destination_block_id": 8
+            }
+          ],
+          "calls": [],
+          "conditions": []
+        },
+        {
+          "line_number": 10,
+          "function_name": "_ZN4bank8evaluateERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExxx",
+          "count": 153,
+          "unexecuted_block": false,
+          "block_ids": [
+            7,
+            8,
+            9,
+            10,
+            49
+          ],
+          "branches": [
+            {
+              "count": 8,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 7,
+              "destination_block_id": 8
+            },
+            {
+              "count": 119,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 7,
+              "destination_block_id": 11
+            },
+            {
+              "count": 34,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 9,
+              "destination_block_id": 10
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 9,
+              "destination_block_id": 49
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 8,
+              "destination_block_id": 1,
+              "returned": 34
+            },
+            {
+              "source_block_id": 9,
+              "destination_block_id": 1,
+              "returned": 34
+            },
+            {
+              "source_block_id": 10,
+              "destination_block_id": 1,
+              "returned": 0
+            },
+            {
+              "source_block_id": 49,
+              "destination_block_id": 1,
+              "returned": 0
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 11,
+          "function_name": "_ZN4bank8evaluateERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExxx",
+          "count": 119,
+          "unexecuted_block": false,
+          "block_ids": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ],
+          "branches": [
+            {
+              "count": 96,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 12,
+              "destination_block_id": 13
+            },
+            {
+              "count": 23,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 12,
+              "destination_block_id": 15
+            },
+            {
+              "count": 43,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 14,
+              "destination_block_id": 15
+            },
+            {
+              "count": 53,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 14,
+              "destination_block_id": 16
+            },
+            {
+              "count": 66,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 17,
+              "destination_block_id": 18
+            },
+            {
+              "count": 53,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 17,
+              "destination_block_id": 32
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 11,
+              "destination_block_id": 1,
+              "returned": 119
+            },
+            {
+              "source_block_id": 13,
+              "destination_block_id": 1,
+              "returned": 96
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 12,
+          "function_name": "_ZN4bank8evaluateERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExxx",
+          "count": 66,
+          "unexecuted_block": false,
+          "block_ids": [
+            18,
+            19,
+            20,
+            21,
+            51
+          ],
+          "branches": [
+            {
+              "count": 4,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 18,
+              "destination_block_id": 19
+            },
+            {
+              "count": 62,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 18,
+              "destination_block_id": 22
+            },
+            {
+              "count": 4,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 20,
+              "destination_block_id": 21
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 20,
+              "destination_block_id": 51
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 19,
+              "destination_block_id": 1,
+              "returned": 4
+            },
+            {
+              "source_block_id": 20,
+              "destination_block_id": 1,
+              "returned": 4
+            },
+            {
+              "source_block_id": 21,
+              "destination_block_id": 1,
+              "returned": 0
+            },
+            {
+              "source_block_id": 51,
+              "destination_block_id": 1,
+              "returned": 0
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 13,
+          "function_name": "_ZN4bank8evaluateERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExxx",
+          "count": 62,
+          "unexecuted_block": false,
+          "block_ids": [
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            53
+          ],
+          "branches": [
+            {
+              "count": 43,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 23,
+              "destination_block_id": 24
+            },
+            {
+              "count": 19,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 23,
+              "destination_block_id": 26
+            },
+            {
+              "count": 6,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 24,
+              "destination_block_id": 25
+            },
+            {
+              "count": 37,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 24,
+              "destination_block_id": 26
+            },
+            {
+              "count": 6,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 27,
+              "destination_block_id": 28
+            },
+            {
+              "count": 56,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 27,
+              "destination_block_id": 31
+            },
+            {
+              "count": 6,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 29,
+              "destination_block_id": 30
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 29,
+              "destination_block_id": 53
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 22,
+              "destination_block_id": 1,
+              "returned": 62
+            },
+            {
+              "source_block_id": 28,
+              "destination_block_id": 1,
+              "returned": 6
+            },
+            {
+              "source_block_id": 29,
+              "destination_block_id": 1,
+              "returned": 6
+            },
+            {
+              "source_block_id": 30,
+              "destination_block_id": 1,
+              "returned": 0
+            },
+            {
+              "source_block_id": 53,
+              "destination_block_id": 1,
+              "returned": 0
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 14,
+          "function_name": "_ZN4bank8evaluateERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExxx",
+          "count": 56,
+          "unexecuted_block": false,
+          "block_ids": [
+            31
+          ],
+          "branches": [],
+          "calls": [],
+          "conditions": []
+        },
+        {
+          "line_number": 16,
+          "function_name": "_ZN4bank8evaluateERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExxx",
+          "count": 53,
+          "unexecuted_block": false,
+          "block_ids": [
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38
+          ],
+          "branches": [
+            {
+              "count": 15,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 33,
+              "destination_block_id": 34
+            },
+            {
+              "count": 38,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 33,
+              "destination_block_id": 36
+            },
+            {
+              "count": 13,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 35,
+              "destination_block_id": 36
+            },
+            {
+              "count": 2,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 35,
+              "destination_block_id": 37
+            },
+            {
+              "count": 51,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 38,
+              "destination_block_id": 39
+            },
+            {
+              "count": 2,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 38,
+              "destination_block_id": 45
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 32,
+              "destination_block_id": 1,
+              "returned": 53
+            },
+            {
+              "source_block_id": 34,
+              "destination_block_id": 1,
+              "returned": 15
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 17,
+          "function_name": "_ZN4bank8evaluateERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExxx",
+          "count": 51,
+          "unexecuted_block": false,
+          "block_ids": [
+            39,
+            40,
+            41,
+            42,
+            43,
+            55
+          ],
+          "branches": [
+            {
+              "count": 38,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 39,
+              "destination_block_id": 40
+            },
+            {
+              "count": 13,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 39,
+              "destination_block_id": 41
+            },
+            {
+              "count": 10,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 40,
+              "destination_block_id": 41
+            },
+            {
+              "count": 28,
+              "throw": false,
+              "fallthrough": false,
+              "source_block_id": 40,
+              "destination_block_id": 44
+            },
+            {
+              "count": 23,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 42,
+              "destination_block_id": 43
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 42,
+              "destination_block_id": 55
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 41,
+              "destination_block_id": 1,
+              "returned": 23
+            },
+            {
+              "source_block_id": 42,
+              "destination_block_id": 1,
+              "returned": 23
+            },
+            {
+              "source_block_id": 43,
+              "destination_block_id": 1,
+              "returned": 0
+            },
+            {
+              "source_block_id": 55,
+              "destination_block_id": 1,
+              "returned": 0
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "line_number": 18,
+          "function_name": "_ZN4bank8evaluateERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExxx",
+          "count": 28,
+          "unexecuted_block": false,
+          "block_ids": [
+            44
+          ],
+          "branches": [],
+          "calls": [],
+          "conditions": []
+        },
+        {
+          "line_number": 20,
+          "function_name": "_ZN4bank8evaluateERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEExxx",
+          "count": 2,
+          "unexecuted_block": false,
+          "block_ids": [
+            45,
+            46,
+            47,
+            57
+          ],
+          "branches": [
+            {
+              "count": 2,
+              "throw": false,
+              "fallthrough": true,
+              "source_block_id": 46,
+              "destination_block_id": 47
+            },
+            {
+              "count": 0,
+              "throw": true,
+              "fallthrough": false,
+              "source_block_id": 46,
+              "destination_block_id": 57
+            }
+          ],
+          "calls": [
+            {
+              "source_block_id": 45,
+              "destination_block_id": 1,
+              "returned": 2
+            },
+            {
+              "source_block_id": 46,
+              "destination_block_id": 1,
+              "returned": 2
+            },
+            {
+              "source_block_id": 47,
+              "destination_block_id": 1,
+              "returned": 0
+            },
+            {
+              "source_block_id": 57,
+              "destination_block_id": 1,
+              "returned": 0
+            }
+          ],
+          "conditions": []
+        }
+      ]
+    }
+  ]
+}

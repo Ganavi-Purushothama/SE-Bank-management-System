@@ -1,0 +1,25 @@
+✔ money parser accepts exact minor units and rejects financial edge cases (0.7291ms)
+✔ field, identifier, password, pagination and configuration validation (0.3255ms)
+✔ C++ real executable enforces deposit, withdrawal, minimum, opening, settlement and overflow (880.6142ms)
+✔ C++ rejects malformed, oversized, out-of-range IPC input (78.4931ms)
+✔ password hashing uses per-password salts and verifies credentials (170.9257ms)
+✔ issue #8: phone validator accepts valid formats and rejects invalid numbers (0.4245ms)
+✔ issue #5: C++ rule engine enforces boundary conditions and available funds (216.4982ms)
+✔ SCRUM-36: opening and deposit accept exact limits and reject one paise beyond (179.0332ms)
+✔ SCRUM-36: financial rules reject invalid balances, amounts and minimums (1058.5706ms)
+✔ SCRUM-36: withdrawals preserve exact paise across a deposit and full settlement (181.559ms)
+✔ CSV exports metadata, exact paise, quoting and formula-safe customer text (1.9817ms)
+✔ statement period requires real, ordered calendar dates (2.2081ms)
+✔ SCRUM-36: amount parsing preserves paise at fractional and maximum boundaries (1.2388ms)
+✔ SCRUM-36: passwords enforce minimum length and UTF-8 byte limits (0.1531ms)
+✔ SCRUM-36: customer text handles optional values, limits and control characters (0.1458ms)
+✔ SCRUM-36: phone numbers enforce seven to fifteen digits (0.1615ms)
+✔ SCRUM-36: pagination accepts endpoints and rejects ambiguous input (0.1613ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2978.084

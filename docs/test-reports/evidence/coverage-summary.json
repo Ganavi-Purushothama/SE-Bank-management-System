@@ -1,0 +1,36 @@
+{
+  "revision": "729f5c35e3aba21da91585636fd6fea87bcc6e43",
+  "date": "2026-11-11",
+  "javascript_pglite": {
+    "lines": "92.91",
+    "branches": "91.70",
+    "functions": "90.36"
+  },
+  "javascript_postgres": {
+    "lines": "97.53",
+    "branches": "92.52",
+    "functions": "90.48"
+  },
+  "cpp": [
+    {
+      "file": "core/main.cpp",
+      "lines": 18,
+      "coveredLines": 18,
+      "branches": 79,
+      "coveredBranches": 47
+    },
+    {
+      "file": "core/banking.hpp",
+      "lines": 11,
+      "coveredLines": 11,
+      "branches": 46,
+      "coveredBranches": 39
+    }
+  ],
+  "cpp_total": {
+    "lines": 29,
+    "coveredLines": 29,
+    "branches": 125,
+    "coveredBranches": 86
+  }
+}

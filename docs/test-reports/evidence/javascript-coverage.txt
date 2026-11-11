@@ -1,0 +1,75 @@
+✔ HTTP parser, request limits and brute-force throttling reject unsafe requests (2138.1228ms)
+▶ complete account lifecycle, security boundaries and financial consistency
+  ✔ unauthenticated access, origin protection, malformed login and secure headers (54.286ms)
+  ✔ admin creation, unique identifiers, initial validation and password hashing (348.4158ms)
+  ✔ ownership, RBAC, CSRF and mass assignment enforced (11.6773ms)
+  ✔ real deposit, idempotent retries, collision detection, withdrawal, balance and ledger (105.3606ms)
+  ✔ bad amounts and overdrafts leave balances unchanged (58.708ms)
+  ✔ concurrent withdrawal requests serialize without overdraft (96.3765ms)
+  ✔ contact update, safe search and missing records (10.0697ms)
+  ✔ issue #8: phone validation rejects malformed numbers and keeps stored details (11.533ms)
+  ✔ issue #9: statement summary, date range, ordering and customer isolation (20.3363ms)
+  ✔ issue #4: database connectivity health check and constraint error handling (3.2308ms)
+  ✔ three failures persist lockout, invalidate sessions and require admin unlock (247.7472ms)
+  ✔ session expiry and logout revoke protected access (55.6834ms)
+  ✔ admin closure atomically settles funds, preserves ledger and denies future access (111.5386ms)
+✔ complete account lifecycle, security boundaries and financial consistency (1587.8692ms)
+{"event":"request_failed","requestId":"70b17763-c65d-4b7d-921a-5d76a168acb9","code":"P0001"}
+✔ database failure after balance update rolls back the entire financial operation (712.3764ms)
+{"event":"request_failed","requestId":"131a5e31-2af3-4695-9a5b-e2ad965b643d","code":"INTERNAL"}
+✔ engine unavailability preserves account state (659.6883ms)
+✔ money parser accepts exact minor units and rejects financial edge cases (0.9984ms)
+✔ field, identifier, password, pagination and configuration validation (0.3643ms)
+✔ C++ real executable enforces deposit, withdrawal, minimum, opening, settlement and overflow (324.6398ms)
+✔ C++ rejects malformed, oversized, out-of-range IPC input (78.5886ms)
+✔ password hashing uses per-password salts and verifies credentials (168.5666ms)
+✔ issue #8: phone validator accepts valid formats and rejects invalid numbers (0.4273ms)
+✔ issue #5: C++ rule engine enforces boundary conditions and available funds (212.656ms)
+✔ SCRUM-36: opening and deposit accept exact limits and reject one paise beyond (191.1443ms)
+✔ SCRUM-36: financial rules reject invalid balances, amounts and minimums (1008.6105ms)
+✔ SCRUM-36: withdrawals preserve exact paise across a deposit and full settlement (191.4327ms)
+✔ SCRUM-38: invalid transactions preserve balance, ledger and audit records (1139.6365ms)
+{"event":"request_failed","requestId":"a661b780-27f9-4972-bace-104c20510725","code":"P0001"}
+✔ SCRUM-38: audit failure rolls back balance and ledger and permits a safe retry (781.8241ms)
+✔ SCRUM-38: anonymous, forged and customer sessions cannot reach administrator actions (1005.2025ms)
+✔ SCRUM-38: reauthentication rotates the cookie and rejects replay of the old session (586.6567ms)
+✔ change password verifies current password, rotates sessions and audits (1065.3296ms)
+✔ CSV exports metadata, exact paise, quoting and formula-safe customer text (1.6841ms)
+✔ statement period requires real, ordered calendar dates (2.0847ms)
+✔ statements include the full period with reconciled balances and ownership checks (1193.1639ms)
+✔ statement limits reject truncation and unsafe monetary totals (903.4807ms)
+﹣ real PostgreSQL statement snapshot stays consistent across a concurrent deposit (0.1445ms) # SKIP
+✔ SCRUM-36: amount parsing preserves paise at fractional and maximum boundaries (1.047ms)
+✔ SCRUM-36: passwords enforce minimum length and UTF-8 byte limits (0.158ms)
+✔ SCRUM-36: customer text handles optional values, limits and control characters (0.2375ms)
+✔ SCRUM-36: phone numbers enforce seven to fifteen digits (0.1959ms)
+✔ SCRUM-36: pagination accepts endpoints and rejects ambiguous input (0.1522ms)
+ℹ tests 42
+ℹ suites 0
+ℹ pass 41
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 15293.0879
+ℹ start of coverage report
+ℹ --------------------------------------------------------------------
+ℹ file              | line % | branch % | funcs % | uncovered lines
+ℹ --------------------------------------------------------------------
+ℹ public            |        |          |         |
+ℹ  statement-csv.js | 100.00 |    78.57 |  100.00 |
+ℹ server            |        |          |         |
+ℹ  app.js           |  96.17 |    87.50 |   87.50 | 57-60 63-69 97-99
+ℹ  auth.js          | 100.00 |    97.67 |  100.00 |
+ℹ  banking.js       | 100.00 |   100.00 |  100.00 |
+ℹ  config.js        | 100.00 |    81.82 |  100.00 |
+ℹ  core.js          |  88.46 |    64.29 |   57.14 | 18-19 22-23 45-46
+ℹ  crypto.js        | 100.00 |   100.00 |  100.00 |
+ℹ  db.js            |   5.97 |   100.00 |    0.00 | 4-49 51-67
+ℹ  errors.js        | 100.00 |   100.00 |  100.00 |
+ℹ  statements.js    | 100.00 |   100.00 |  100.00 |
+ℹ  validation.js    | 100.00 |   100.00 |  100.00 |
+ℹ --------------------------------------------------------------------
+ℹ all files         |  92.91 |    91.70 |   90.36 |
+ℹ --------------------------------------------------------------------
+ℹ end of coverage report

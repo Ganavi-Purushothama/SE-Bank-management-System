@@ -1,0 +1,116 @@
+{"event":"database_pool_client_removed"}
+✔ HTTP parser, request limits and brute-force throttling reject unsafe requests (1969.1591ms)
+{"event":"database_pool_client_removed"}
+▶ complete account lifecycle, security boundaries and financial consistency
+  ✔ unauthenticated access, origin protection, malformed login and secure headers (56.4385ms)
+  ✔ admin creation, unique identifiers, initial validation and password hashing (371.7437ms)
+  ✔ ownership, RBAC, CSRF and mass assignment enforced (12.1092ms)
+  ✔ real deposit, idempotent retries, collision detection, withdrawal, balance and ledger (100.4538ms)
+  ✔ bad amounts and overdrafts leave balances unchanged (54.8261ms)
+  ✔ concurrent withdrawal requests serialize without overdraft (112.199ms)
+  ✔ contact update, safe search and missing records (10.6945ms)
+  ✔ issue #8: phone validation rejects malformed numbers and keeps stored details (8.2896ms)
+  ✔ issue #9: statement summary, date range, ordering and customer isolation (12.4843ms)
+  ✔ issue #4: database connectivity health check and constraint error handling (2.1585ms)
+{"event":"database_pool_client_removed"}
+  ✔ three failures persist lockout, invalidate sessions and require admin unlock (245.4508ms)
+  ✔ session expiry and logout revoke protected access (51.0168ms)
+  ✔ admin closure atomically settles funds, preserves ledger and denies future access (103.1107ms)
+{"event":"database_pool_client_removed"}
+✔ complete account lifecycle, security boundaries and financial consistency (1407.121ms)
+{"event":"database_pool_client_removed"}
+{"event":"request_failed","requestId":"6f419e76-1c7a-4439-9ae9-96c5d2bd5ddb","code":"P0001"}
+{"event":"database_pool_client_removed"}
+✔ database failure after balance update rolls back the entire financial operation (502.7893ms)
+{"event":"database_pool_client_removed"}
+{"event":"request_failed","requestId":"4de25c74-1098-473f-92ca-58fcdcbfa82a","code":"INTERNAL"}
+{"event":"database_pool_client_removed"}
+✔ engine unavailability preserves account state (437.1162ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ SCRUM-38: invalid transactions preserve balance, ledger and audit records (628.1474ms)
+{"event":"database_pool_client_removed"}
+{"event":"request_failed","requestId":"79df757c-8b28-4ccc-a14b-cfad32f22fc5","code":"P0001"}
+{"event":"database_pool_client_removed"}
+✔ SCRUM-38: audit failure rolls back balance and ledger and permits a safe retry (512.5332ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ real PostgreSQL migrations are repeatable (168.4777ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ real PostgreSQL serves 500 fictional customer sessions (897.0021ms)
+ℹ 500 concurrent balance/session reads (100 pooled HTTP sockets): total 463ms; p95 231ms
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ real PostgreSQL concurrent idempotency and minimum balance use row locks (1511.926ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ Transaction failure triggers balance rollback and creates no success ledger entry (440.2912ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ SCRUM-38: anonymous, forged and customer sessions cannot reach administrator actions (503.4706ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ SCRUM-38: reauthentication rotates the cookie and rejects replay of the old session (604.7087ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ change password verifies current password, rotates sessions and audits (776.4221ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ documented migration/admin/start entrypoints and restart preserve data and sessions (1721.3203ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ statements include the full period with reconciled balances and ownership checks (646.587ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ statement limits reject truncation and unsafe monetary totals (536.9379ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+✔ real PostgreSQL statement snapshot stays consistent across a concurrent deposit (433.2102ms)
+{"event":"database_pool_client_removed"}
+{"event":"database_pool_client_removed"}
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14937.3018
+ℹ start of coverage report
+ℹ -----------------------------------------------------------------
+ℹ file           | line % | branch % | funcs % | uncovered lines
+ℹ -----------------------------------------------------------------
+ℹ server         |        |          |         |
+ℹ  app.js        |  96.17 |    87.50 |   87.50 | 57-60 63-69 97-99
+ℹ  auth.js       | 100.00 |    97.67 |  100.00 |
+ℹ  banking.js    | 100.00 |   100.00 |  100.00 |
+ℹ  core.js       |  88.46 |    64.29 |   57.14 | 18-19 22-23 45-46
+ℹ  crypto.js     | 100.00 |   100.00 |  100.00 |
+ℹ  db.js         |  89.55 |    86.67 |   80.00 | 20-26
+ℹ  errors.js     | 100.00 |   100.00 |  100.00 |
+ℹ  statements.js | 100.00 |   100.00 |  100.00 |
+ℹ  validation.js | 100.00 |   100.00 |  100.00 |
+ℹ -----------------------------------------------------------------
+ℹ all files      |  97.53 |    92.52 |   90.48 |
+ℹ -----------------------------------------------------------------
+ℹ end of coverage report
