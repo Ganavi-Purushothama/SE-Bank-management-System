@@ -40,6 +40,19 @@ SAD/STP additionally reference SQL injection prevention and HTTPS as SR-006/007;
 
 Tests use real compiled C++ for opening, deposit, withdrawal and settlement. PGlite fixtures serialize transactions because that engine has one connection. Only the dedicated PostgreSQL suite establishes multiconnection row-locking behavior. Browser tests use PGlite, not a mocked banking API; only the explicit API-failure UI test intercepts a request.
 
+## SCRUM-39 acceptance mapping
+
+| Criterion | Evidence |
+|---|---|
+| Prerequisites and dependencies documented | `docs/setup-and-execution.md`: tools, versions, shell/platform notes and locked npm dependencies |
+| Setup and execution commands provided | Fresh checkout, build, provisioning/start, restart, health check and fictional demo instructions; portable README entry |
+| Database configuration included | Project-owned helper or manual psql role/database route; environment, URL encoding, port/origin and credentials |
+| Clean setup tested where feasible | Clean source export with no prior environment/dependencies/data/binary; fresh npm ci/build, 26 PostgreSQL passes including normal startup/restart persistence; OS tools and portable binaries reused |
+
+Verified 10 November 2026. No fresh VM, interactive psql role creation, persistent
+helper launch or manual browser demo is claimed. See [Jira evidence](scrum-39-jira-evidence.md)
+and [clean-copy execution record](evidence/scrum-39/README.md).
+
 ## SCRUM-38 acceptance mapping
 
 | Criterion | Verification |

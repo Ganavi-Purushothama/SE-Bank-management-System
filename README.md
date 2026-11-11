@@ -8,21 +8,22 @@ Original submitted [SRS](SRS.md), [SAD](SAD_Bank_Management_System.md), [STP](ST
 
 ## Requirements
 
-- Node.js **22.12 or newer** and npm (verified with Node 24.13.0 / npm 11.21.1).
-- GCC/G++ with C++17 support on PATH (verified with G++ 14.2.0). `CXX` can select another compatible compiler executable.
+- Node.js **22.12 or newer** and npm (latest local verification: Node 24.22.1 / npm 11.19.1).
+- GCC/G++ with C++17 support on PATH (latest local verification: G++ 16.2.0). `CXX` can select another compatible compiler executable.
 - PostgreSQL server and `psql` (verified with PostgreSQL 18.4 portable test binaries). A dedicated local PostgreSQL installation is recommended for development.
 - A modern browser. Chromium automated tests are included.
 
 ## Run locally
 
-The implemented application is on `main`, merged through [PR #13](https://github.com/Ganavi-Purushothama/SE-Bank-management-System/pull/13). The original project artifacts remain preserved.
+The implemented application is on `main`, merged through [PR #13](https://github.com/Ganavi-Purushothama/SE-Bank-management-System/pull/13). Follow the complete [installation and execution guide](docs/setup-and-execution.md) for prerequisites, PowerShell/Git Bash commands, both database setup routes, restart instructions and a demonstration checklist. To review the SCRUM-39 documentation before it is merged, use `codex/scrum-39-installation-execution`; afterward, use `main`. The original project artifacts remain preserved.
 
 ### Easiest local startup
 
-For this Windows checkout, PostgreSQL binaries are already available. Run:
+From your checkout root, after installing Node/G++, dependencies and PostgreSQL binaries, run:
 
 ```powershell
-Set-Location "D:\PES\SEM-5\SE\Jackfruit\SE-Bank-management-System"
+npm ci
+# If necessary, set POSTGRES_BIN to your PostgreSQL bin directory first.
 npm run local
 ```
 
@@ -37,6 +38,8 @@ On another machine, install PostgreSQL binaries or set POSTGRES_BIN to their bin
 ```powershell
 git clone https://github.com/Ganavi-Purushothama/SE-Bank-management-System.git
 cd SE-Bank-management-System
+# Until SCRUM-39 is merged, switch to its published review branch.
+git switch codex/scrum-39-installation-execution
 npm ci
 npm run build
 Copy-Item .env.example .env
@@ -128,6 +131,7 @@ npm audit
 | [Traceability](docs/traceability.md) | SRS → UI/service/database/test mapping |
 | [Security review](docs/security.md) | Controls, findings, residual risks |
 | [Testing](docs/testing.md) | Exact commands, runtime differences and demonstration workflow |
+| [Installation/execution](docs/setup-and-execution.md) | Fresh checkout, dependencies, database setup, startup/restart, demonstration and troubleshooting |
 | [Implementation report](docs/implementation-report.md) | Actual verification results and remaining limitations |
 
 ## Troubleshooting
