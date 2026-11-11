@@ -107,3 +107,110 @@ test("SCRUM-38: reauthentication rotates the cookie and rejects replay of the ol
     0,
   );
 });
+
+test("change password verifies current password, rotates sessions and audits", async (t) => {
+  const f = await fixture();
+  t.after(() => f.close());
+  const admin = f.client();
+  await admin.request("/login", "POST", {
+    accountNumber: "test-admin",
+    password: adminPassword,
+  });
+  const created = await admin.request("/admin/accounts", "POST", {
+    name: "Password Fixture",
+    initialDeposit: "1000",
+    password: customerPassword,
+  });
+  const number = created.body.data.number;
+  const newPassword = "BrandNewPassword!2027";
+  const phone = f.client();
+  const laptop = f.client();
+  for (const c of [phone, laptop])
+    assert.equal(
+      (
+        await c.request("/login", "POST", {
+          accountNumber: number,
+          password: customerPassword,
+        })
+      ).status,
+      200,
+    );
+  // wrong current password is rejected and audited
+  assert.equal(
+    (
+      await laptop.request("/password", "POST", {
+        currentPassword: "WrongPassword!2026",
+        newPassword,
+      })
+    ).status,
+    403,
+  );
+  // weak or unchanged passwords are rejected
+  for (const bad of ["short", customerPassword])
+    assert.equal(
+      (
+        await laptop.request("/password", "POST", {
+          currentPassword: customerPassword,
+          newPassword: bad,
+        })
+      ).status,
+      400,
+    );
+  // unexpected fields are rejected
+  assert.equal(
+    (
+      await laptop.request("/password", "POST", {
+        currentPassword: customerPassword,
+        newPassword,
+        role: "ADMIN",
+      })
+    ).status,
+    400,
+  );
+  assert.equal(
+    (
+      await laptop.request("/password", "POST", {
+        currentPassword: customerPassword,
+        newPassword,
+      })
+    ).status,
+    200,
+  );
+  // this device stays signed in, other sessions are revoked
+  assert.equal((await laptop.request("/me")).status, 200);
+  assert.equal((await phone.request("/me")).status, 401);
+  // old password no longer works, new one does
+  assert.equal(
+    (
+      await f.client().request("/login", "POST", {
+        accountNumber: number,
+        password: customerPassword,
+      })
+    ).status,
+    401,
+  );
+  assert.equal(
+    (
+      await f.client().request("/login", "POST", {
+        accountNumber: number,
+        password: newPassword,
+      })
+    ).status,
+    200,
+  );
+  // anonymous callers cannot reach the endpoint
+  assert.equal(
+    (
+      await f.client().request("/password", "POST", {
+        currentPassword: customerPassword,
+        newPassword,
+      })
+    ).status,
+    401,
+  );
+  const events = (await f.db.query("SELECT event FROM audit_events")).rows.map(
+    (r) => r.event,
+  );
+  assert.ok(events.includes("PASSWORD_CHANGED"));
+  assert.ok(events.includes("PASSWORD_CHANGE_FAILED"));
+});

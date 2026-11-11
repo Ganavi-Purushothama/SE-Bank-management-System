@@ -1,6 +1,6 @@
 import { assert } from "./errors.js";
 import { digest, token, hashPassword, verifyPassword } from "./crypto.js";
-import { fields } from "./validation.js";
+import { fields, password as validPassword } from "./validation.js";
 import { audit } from "./banking.js";
 export async function auth(db, config) {
   const dummy = await hashPassword(token());
@@ -124,5 +124,58 @@ export async function auth(db, config) {
     res.clearCookie(cookieName, cookieOptions);
     res.json({ status: "OK" });
   }
-  return { login, required, admin, logout };
+  async function changePassword(req, res) {
+    fields(req.body, ["currentPassword", "newPassword"]);
+    const { currentPassword, newPassword } = req.body;
+    assert(
+      typeof currentPassword === "string" &&
+        Buffer.byteLength(currentPassword) <= 128,
+      400,
+      "Current password is invalid",
+    );
+    validPassword(newPassword);
+    assert(
+      newPassword !== currentPassword,
+      400,
+      "New password must differ from the current password",
+    );
+    const newHash = await hashPassword(newPassword);
+    const result = await db.transaction(async (c) => {
+      const user = (
+        await c.query("SELECT * FROM users WHERE id=$1 FOR UPDATE", [
+          req.user.id,
+        ])
+      ).rows[0];
+      if (!(await verifyPassword(currentPassword, user.password_hash))) {
+        await audit(c, "PASSWORD_CHANGE_FAILED", user.id);
+        return null;
+      }
+      await c.query("UPDATE users SET password_hash=$1 WHERE id=$2", [
+        newHash,
+        user.id,
+      ]);
+      // End every existing session, then issue a fresh one for this device.
+      await c.query("DELETE FROM sessions WHERE user_id=$1", [user.id]);
+      const sessionToken = token(),
+        csrfToken = token();
+      await c.query(
+        "INSERT INTO sessions(token_hash,user_id,csrf_token,expires_at) VALUES($1,$2,$3,$4)",
+        [
+          digest(sessionToken),
+          user.id,
+          csrfToken,
+          new Date(Date.now() + config.sessionMinutes * 60000),
+        ],
+      );
+      await audit(c, "PASSWORD_CHANGED", user.id);
+      return { sessionToken, csrfToken };
+    });
+    assert(result, 403, "Current password is incorrect");
+    res.cookie(cookieName, result.sessionToken, {
+      ...cookieOptions,
+      maxAge: config.sessionMinutes * 60000,
+    });
+    res.json({ status: "OK", data: { csrfToken: result.csrfToken } });
+  }
+  return { login, required, admin, logout, changePassword };
 }
