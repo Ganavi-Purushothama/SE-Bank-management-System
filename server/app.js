@@ -86,6 +86,21 @@ export async function createApp(db, config, engine) {
   );
   app.use("/api", authentication.required);
   app.post("/api/logout", authentication.logout);
+  app.post(
+    "/api/password",
+    rateLimit({
+      windowMs: 15 * 60000,
+      limit: 10,
+      standardHeaders: "draft-8",
+      legacyHeaders: false,
+      handler: (req, res) =>
+        res.status(429).json({
+          status: "REJECTED",
+          reason: "Too many password change attempts. Try later",
+        }),
+    }),
+    authentication.changePassword,
+  );
   app.get("/api/me", async (req, res) => {
     const accounts = (
       await db.query(
